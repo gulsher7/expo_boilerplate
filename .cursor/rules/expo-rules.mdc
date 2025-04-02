@@ -1,0 +1,217 @@
+---
+description: 
+globs: *.ts, *.tsx, src/**/*.{ts,tsx,js,json}, App.tsx,
+alwaysApply: false
+---
+# Project Structure and Development Rules
+
+## 1. Project Organization
+```
+src/
+├── assets/        # Images, icons, fonts, and other static assets
+├── components/    # Reusable UI components
+├── context/       # React Context providers
+├── hooks/         # Custom React hooks
+├── lang/          # i18n translation files
+├── models/        # Data models and screen-specific interfaces
+├── navigation/    # Navigation configuration
+├── redux/         # State management
+├── screens/       # Screen components
+├── styles/        # Global styles and themes
+├── typings/       # Global or app-wide TypeScript types
+├── constants/     # Global constants
+└── utils/         # Utility functions
+```
+
+## 2. Design Implementation Steps
+
+### 2.1 Pre-Development Checklist
+- [ ] Review Figma design thoroughly
+- [ ] Identify reusable components
+- [ ] Check existing components for reusability
+- [ ] Note all colors used in the design
+- [ ] List all static strings for i18n
+- [ ] Identify required assets (icons, images)
+
+### 2.2 Component Development Order
+1. Add new colors to `styles/colors.ts`
+2. Add translations to language files
+3. Create/update reusable components
+4. Implement screen layout
+5. Add navigation (if needed)
+6. Implement business logic
+
+## 3. Component Creation Rules
+
+
+### 3.1 Text Usage and Internationalization
+
+DO:
+```typescript
+// Always use TextComp with translation keys
+import TextComp from '@/components/TextComp';
+
+<TextComp text="WELCOME_MESSAGE" />
+```
+Translation Keys:
+- Use UPPERCASE for keys
+- Use underscores for spaces
+- Group by feature/screen
+- Include all languages simultaneously
+- Define keys in both `en.json` and `ar.json`:
+
+```json
+// src/lang/en.json
+{
+    "LOGIN": "Login",
+    "SIGNUP": "Sign Up",
+    "WELCOME_MESSAGE": "Welcome back!"
+}
+
+// src/lang/ar.json
+{
+    "LOGIN": "تسجيل الدخول",
+    "SIGNUP": "اشتراك",
+    "WELCOME_MESSAGE": "مرحبا بعودتك!"
+}
+```
+
+DON'T:
+```typescript
+// Don't use direct Text component
+import { Text } from 'react-native';
+
+<Text>Welcome</Text>
+```
+
+## 4. Internationalization Rules
+
+### 4.1 Translation Keys
+- Use UPPERCASE and underscores
+- Define keys in all languages
+- Use variables in keys like:
+```json
+"HELLO_USER": "Hello {{value}}"
+```
+
+### 4.2 Usage in Components
+
+```tsx
+<TextComp text="HELLO_USER" values={{ value: userData.name }} />
+```
+
+## 5. Style Organization
+
+### 5.1 Colors
+Use `colors.ts` with semantic naming and light/dark support:
+```ts
+export const commonColors = {
+  primary: '#00A13A',
+  error: '#FF0000',
+  gray100: '#EFF0F6',
+};
+```
+
+### 5.2 RTL Support
+```tsx
+flexDirection: isRTL ? 'row-reverse' : 'row'
+```
+
+## 6. Component Props Pattern
+
+```ts
+interface ComponentProps {
+  onPress: () => void;
+  title: string;
+  disabled?: boolean;
+  variant?: 'primary' | 'secondary';
+  style?: ViewStyle;
+  textStyle?: TextStyle;
+}
+```
+
+## 7. File Naming Conventions
+
+- Components: `PascalCase.tsx`
+- Hooks/utils: `camelCase.ts`
+- Constants: `UPPER_CASE.ts`
+
+## 8. Import Order
+```ts
+// 1. React
+// 2. Third-party libs
+// 3. Project components
+// 4. Hooks
+// 5. Utils/styles/constants
+```
+
+## 9. Screen Development Checklist
+
+1. ✓ Add translations
+2. ✓ Add new colors
+3. ✓ Reuse components
+4. ✓ Set up navigation
+5. ✓ RTL support
+6. ✓ Error handling
+7. ✓ Test Light/Dark mode
+8. ✓ Test LTR/RTL
+
+
+## 10. Screen Creation Guidelines
+
+Follow this structure when creating new screens:
+
+### 11 File Structure
+
+- Each screen should have its own folder inside `src/screens/`
+- Folder name must follow PascalCase (e.g., `Login`, `Onboard`)
+- Inside each folder:
+  - `ScreenName.tsx`: Main screen component
+  - `styles.ts`: RTL-aware StyleSheet using `useIsRTL`
+
+📁 Example:
+```
+screens/
+└── Login/
+    ├── Login.tsx      # Main screen component
+    └── styles.ts      # RTL-aware styles
+```
+
+### 12 Component & Layout Standards
+
+- Wrap the screen with `WrapperContainer`
+- Use `TextComp` for text and `TextInputComp` for inputs
+- Use `ButtonComp` for actions
+- Get theme colors from `useTheme()`
+- Handle RTL logic using `useIsRTL()` and `useRTLStyles()`
+- Organize content into logical sections:
+  - Header (e.g., back button)
+  - Title + Subtitle
+  - Input section
+  - Button section
+  - Terms or footer info
+
+### 12.1 Navigation
+
+- Use `useNavigation()` with correct typed prop from `navigation/types.ts`
+```ts
+const navigation = useNavigation<NativeStackNavigationProp<AuthStackParamList, 'Login'>>();
+```
+
+### 12.2 Spacing and Styling
+
+- Use `moderateScale()` for all margins, paddings, font sizes, and gaps
+- Never hardcode numbers in styles or inline JSX
+- Avoid defining `StyleSheet.create` inside screen files
+
+### 13 Reusability from Figma
+
+Before implementing any screen:
+
+- **Analyze the provided Figma design thoroughly**
+- Identify UI blocks or repeated views that should be made reusable
+- **Check the `components/` folder** to see if similar components already exist
+- **Do not create a new component** if a reusable one already exists
+- Only create a new component if:
+  - The UI block doesn't exist at all
+  - The existing component cannot be reused through props or styling overrides
