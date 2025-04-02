@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "name": "expo_boilerplate",
+    "slug": "expo_boilerplate",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ]
+  }
+}
