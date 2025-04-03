@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -148,7 +150,7 @@ const AppGenerator: React.FC = () => {
           
           <div className="space-y-6 relative z-10">
 
-          <div className="space-y-3">
+          {/* <div className="space-y-3">
               <Label className="text-base">Select Platform <span className="text-red-500">*</span></Label>
               <div className="grid grid-cols-2 gap-4">
                 {PLATFORM_OPTIONS.map((platform) => (
@@ -170,7 +172,7 @@ const AppGenerator: React.FC = () => {
                   </div>
                 ))}
               </div>
-            </div>
+            </div> */}
 
             <div className="space-y-2">
               <Label htmlFor="app-name" className="text-base">App Name <span className="text-red-500">*</span></Label>

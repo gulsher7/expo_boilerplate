@@ -6,29 +6,8 @@ import Footer from "@/components/ui/Footer";
 import Header from "@/components/ui/Header";
 import { motion } from "framer-motion";
 import { Rocket, Smartphone, Sparkles, Star } from "lucide-react";
-import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 }
-  };
-
-  const floatAnimation = {
-    y: [-10, 10],
-    transition: {
-      duration: 2,
-      repeat: Infinity,
-      repeatType: "reverse",
-      ease: "easeInOut"
-    }
-  };
 
   return (
     <div className="min-h-screen flex flex-col">
