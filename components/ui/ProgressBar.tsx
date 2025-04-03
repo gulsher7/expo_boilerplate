@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
@@ -17,8 +16,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ progress, className }) => {
       </div>
       <Progress 
         value={progress} 
-        className="h-3 overflow-hidden rounded-full" 
-        indicatorClassName="bg-gradient-to-r from-primary via-accent to-secondary transition-all duration-500"
+        className="h-3 overflow-hidden rounded-full [&>div]:bg-gradient-to-r [&>div]:from-primary [&>div]:via-accent [&>div]:to-secondary [&>div]:transition-all [&>div]:duration-500" 
       />
     </div>
   );
