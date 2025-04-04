@@ -2,20 +2,14 @@
 
 import AnimatedBackground from "@/components/ui/AnimatedBackground";
 import AppGenerator from "@/components/ui/AppeGenerator";
-import Footer from "@/components/ui/Footer";
-import Header from "@/components/ui/Header";
 import { motion } from "framer-motion";
 import { Rocket, Smartphone, Sparkles, Star } from "lucide-react";
 
 export default function Home() {
 
   return (
-    <div className="min-h-screen flex flex-col">
-    <AnimatedBackground />
-    
-    <div className="flex-1 flex flex-col">
-      <Header />
-      
+    <div className="min-h-screen flex flex-col">    
+    <div className="flex-1 flex flex-col">      
       <main className="flex-1 container mx-auto py-12 px-4">
         <motion.div 
           className="text-center mb-16"
@@ -30,13 +24,13 @@ export default function Home() {
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
             Create Beautiful React Native Apps
-            <span className="block text-gradient">In Minutes, Not Months</span>
+            <span className="block text-gradient">In Minutes, Not Hours</span>
           </h1>
           
-          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
+          {/* <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
             Transform your app idea into reality with our streamlined generator.
             No coding required, just customize and build.
-          </p>
+          </p> */}
           
           <div className="flex flex-wrap justify-center gap-4 mb-10">
             {[
@@ -60,8 +54,7 @@ export default function Home() {
         
         <AppGenerator />
       </main>
-      
-      <Footer />
+    
     </div>
   </div>
   );

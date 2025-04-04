@@ -1,3 +1,6 @@
+import Header from '@/components/ui/Header';
+import Footer from '@/components/ui/Footer';
+import AnimatedBackground from '@/components/ui/AnimatedBackground';
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
@@ -16,7 +19,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <AnimatedBackground />
+        <Header />
+        {children}
+        <Footer />
+        </body>
     </html>
   );
 }

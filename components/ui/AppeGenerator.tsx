@@ -4,13 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { downloadApp, getBuildStatus, submitAppBuild } from "@/lib/api";
 import { motion } from "framer-motion";
 import { Check, Download, Loader, Smartphone, Sparkles, Upload } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from "sonner";
-import FileUpload from "./FileUpload";
-import ProgressBar from "./ProgressBar";
+// import ProgressBar from "./ProgressBar";
 import TipCard from "./TipCard";
+import { REACT_NATIVE_TIPS } from "@/constants/tips";
 
 
 const PLATFORM_OPTIONS = [
@@ -27,41 +28,6 @@ const PLATFORM_OPTIONS = [
 ];
 
 
-// React Native tips to display during build
-const REACT_NATIVE_TIPS = [
-  {
-    title: "Use Functional Components",
-    description: "Prefer functional components with hooks over class components for better performance and readability."
-  },
-  {
-    title: "Optimize List Rendering",
-    description: "Use FlatList or SectionList instead of ScrollView for long lists to optimize performance."
-  },
-  {
-    title: "Handle Device Rotation",
-    description: "Use the Dimensions API with event listeners to handle device rotation and screen size changes."
-  },
-  {
-    title: "Avoid Inline Styles",
-    description: "Define styles outside of the render method to prevent recreation on each render cycle."
-  },
-  {
-    title: "Use React Navigation",
-    description: "For navigation between screens, React Navigation provides a complete solution with deep linking support."
-  },
-  {
-    title: "Implement Proper Error Boundaries",
-    description: "Use error boundaries to catch JavaScript errors in components and display fallback UIs."
-  },
-  {
-    title: "Optimize Images",
-    description: "Resize images to the appropriate dimensions before displaying them to save memory and improve performance."
-  },
-  {
-    title: "Use Platform-Specific Code",
-    description: "Utilize the Platform API to provide different implementations for iOS and Android when necessary."
-  }
-];
 
 const AppGenerator: React.FC = () => {
   const [appName, setAppName] = useState("");
@@ -73,47 +39,54 @@ const AppGenerator: React.FC = () => {
   const [isComplete, setIsComplete] = useState(false);
   const [visibleTips, setVisibleTips] = useState<Array<typeof REACT_NATIVE_TIPS[0]>>([]);
   const [tipsIndex, setTipsIndex] = useState(0);
-  const [selectedPlatform, setSelectedPlatform] = useState(PLATFORM_OPTIONS[0].id);
+  // const [selectedPlatform, setSelectedPlatform] = useState(PLATFORM_OPTIONS[0].id);
+  const [jobId, setJobId] = useState("");
 
   // Validate form
-  const isFormValid = appName.trim() !== "" && bundleId.trim() !== "" && appIcon !== null;
+  // const isFormValid = appName.trim() !== "" && bundleId.trim() !== "" && appIcon !== null;
+  const isFormValid = appName.trim() !== "" && bundleId.trim() !== "";
 
   // Handle form submission
-  const handleGenerateApp = () => {
+
+
+  const handleSubmit = async () => {
     if (!isFormValid) {
       toast.error("Please fill in all required fields");
       return;
     }
+    try {
+      const formData = { appName, bundleId };
+      const response = await submitAppBuild(formData);
+      toast.success("App build started");
 
-    setIsGenerating(true);
-    setProgress(0);
-    setVisibleTips([REACT_NATIVE_TIPS[0]]);
-    setTipsIndex(1);
+      setIsGenerating(true);
+      
+      // Select three random tips from REACT_NATIVE_TIPS
+      const shuffledTips = [...REACT_NATIVE_TIPS].sort(() => 0.5 - Math.random());
+      const randomThreeTips = shuffledTips.slice(0, 3);
+      setVisibleTips(randomThreeTips);
 
-    // Simulate progress
-    const interval = setInterval(() => {
-      setProgress((prev) => {
-        const newProgress = prev + Math.random() * 5;
-        
-        // Add a new tip every 15% progress approximately
-        if (Math.floor(prev / 15) < Math.floor(newProgress / 15) && tipsIndex < REACT_NATIVE_TIPS.length) {
-          setVisibleTips(prevTips => [...prevTips, REACT_NATIVE_TIPS[tipsIndex]]);
-          setTipsIndex(prevIndex => prevIndex + 1);
-        }
-        
-        if (newProgress >= 100) {
+      const interval = setInterval(async () => {
+        const statusRes = await getBuildStatus(response.jobId);
+        if (statusRes.status === "completed") {
           clearInterval(interval);
-          setIsComplete(true);
-          toast.success("App generated successfully!");
-          return 100;
+          toast.success("Build completed!");
+          setIsComplete(true)
+          setJobId(response.jobId)
+          setIsGenerating(false)
+        } else if (statusRes.status === "failed") {``
+          clearInterval(interval);
+          toast.error("Build failed");
+          setIsGenerating(false)
         }
-        
-        return newProgress;
-      });
-    }, 800);
-
-    return () => clearInterval(interval);
+      }, 5000);
+    } catch (err) {
+      console.error(err);
+      toast.error("Something went wrong");
+      setIsGenerating(false)
+    }
   };
+
 
   const resetForm = () => {
     setAppName("");
@@ -131,7 +104,7 @@ const AppGenerator: React.FC = () => {
     <div className="w-full max-w-7xl mx-auto px-4 animate-fade-in">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
         {/* Form Section */}
-        <motion.div 
+        <motion.div
           className="glassmorphism rounded-2xl p-8 border-2 border-primary/10 overflow-hidden relative"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -140,17 +113,17 @@ const AppGenerator: React.FC = () => {
           {/* Decorative circles */}
           <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-primary/5"></div>
           <div className="absolute -bottom-10 -left-10 w-20 h-20 rounded-full bg-accent/5"></div>
-          
+
           <div className="flex items-center gap-2 mb-6">
             <div className="bg-primary/10 p-2 rounded-lg">
               <Smartphone className="h-6 w-6 text-primary" />
             </div>
             <h2 className="text-2xl font-bold">Create Your React Native App</h2>
           </div>
-          
+
           <div className="space-y-6 relative z-10">
 
-          {/* <div className="space-y-3">
+            {/* <div className="space-y-3">
               <Label className="text-base">Select Platform <span className="text-red-500">*</span></Label>
               <div className="grid grid-cols-2 gap-4">
                 {PLATFORM_OPTIONS.map((platform) => (
@@ -176,21 +149,21 @@ const AppGenerator: React.FC = () => {
 
             <div className="space-y-2">
               <Label htmlFor="app-name" className="text-base">App Name <span className="text-red-500">*</span></Label>
-              <Input 
-                id="app-name" 
-                placeholder="My Awesome App" 
+              <Input
+                id="app-name"
+                placeholder="My Awesome App"
                 value={appName}
                 onChange={(e) => setAppName(e.target.value)}
                 disabled={isGenerating}
                 className="h-12 rounded-xl border-2 border-primary/10 focus:border-primary/20 transition-all"
               />
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="bundle-id" className="text-base">Bundle ID <span className="text-red-500">*</span></Label>
-              <Input 
-                id="bundle-id" 
-                placeholder="com.mycompany.myapp" 
+              <Input
+                id="bundle-id"
+                placeholder="com.mycompany.myapp"
                 value={bundleId}
                 onChange={(e) => setBundleId(e.target.value)}
                 disabled={isGenerating}
@@ -200,10 +173,10 @@ const AppGenerator: React.FC = () => {
                 A unique identifier for your app, usually in reverse domain notation.
               </p>
             </div>
-            
+
             <Separator className="my-6" />
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <FileUpload 
                 label="App Icon (Required)"
                 description="PNG, 1024x1024px"
@@ -219,14 +192,14 @@ const AppGenerator: React.FC = () => {
                 onChange={setSplashScreen}
                 className="flex-1"
               />
-            </div>
-            
+            </div> */}
+
             <div className="pt-6">
               {!isGenerating && !isComplete ? (
-                <Button 
+                <Button
                   className="w-full h-12 text-base font-medium rounded-xl bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-all group relative overflow-hidden"
                   disabled={!isFormValid || isGenerating}
-                  onClick={handleGenerateApp}
+                  onClick={handleSubmit}
                 >
                   <div className="absolute inset-0 bg-white/20 translate-y-12 group-hover:translate-y-0 transition-transform duration-300"></div>
                   <span className="relative flex items-center gap-2">
@@ -241,16 +214,18 @@ const AppGenerator: React.FC = () => {
                     <span className="font-medium">App Generated Successfully!</span>
                   </div>
                   <div className="grid grid-cols-2 gap-4">
-                    <Button 
-                      variant="outline" 
+                    <Button
+                      variant="outline"
                       onClick={resetForm}
                       className="rounded-xl h-12 border-2 flex items-center gap-2"
                     >
                       <Upload className="h-4 w-4" />
                       Create Another App
                     </Button>
-                    <Button 
+                    <Button
                       className="rounded-xl h-12 bg-gradient-to-r from-primary to-accent hover:opacity-90 flex items-center gap-2"
+                      onClick={() => downloadApp(jobId)}
+                      disabled={!jobId}
                     >
                       <Download className="h-4 w-4" />
                       Download App
@@ -259,7 +234,7 @@ const AppGenerator: React.FC = () => {
                 </div>
               ) : (
                 <div className="space-y-6">
-                  <ProgressBar progress={progress} />
+                  {/* <ProgressBar progress={progress} /> */}
                   <div className="flex justify-center">
                     <div className="animate-bounce px-4 py-2 rounded-full bg-primary/10 text-primary text-sm flex items-center gap-2">
                       <Loader className="h-4 w-4 animate-spin" />
@@ -271,7 +246,7 @@ const AppGenerator: React.FC = () => {
             </div>
           </div>
         </motion.div>
-        
+
         {/* Tips Section */}
         <motion.div
           className="space-y-8 py-4"
@@ -300,7 +275,7 @@ const AppGenerator: React.FC = () => {
                   </div>
                 )}
               </div>
-              
+
               <div className="space-y-6">
                 {visibleTips.map((tip, index) => (
                   <TipCard
@@ -314,7 +289,7 @@ const AppGenerator: React.FC = () => {
             </>
           ) : (
             <div className="h-full flex flex-col items-center justify-center text-center p-8 glassmorphism rounded-2xl border-2 border-primary/10">
-              <motion.div 
+              <motion.div
                 className="w-20 h-20 mb-6 relative"
                 animate={{ y: [0, -10, 0] }}
                 transition={{ repeat: Infinity, duration: 3 }}
@@ -323,8 +298,11 @@ const AppGenerator: React.FC = () => {
                 <Sparkles className="h-6 w-6 absolute -top-2 -right-2 text-amber-400" />
               </motion.div>
               <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Ready to Build Your App?</h3>
-              <p className="text-muted-foreground max-w-md mb-6">
+              {/* <p className="text-muted-foreground max-w-md mb-6">
                 Fill out the form with your app details, upload your assets, and watch as your React Native app comes to life.
+              </p> */}
+                 <p className="text-muted-foreground max-w-md mb-6">
+                Fill out the form with your app details, and watch as your React Native app comes to life.
               </p>
               <div className="flex flex-wrap justify-center gap-2">
                 {["Fast", "Easy", "Professional", "Ready-to-use"].map((tag, i) => (

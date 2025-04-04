@@ -1,5 +1,7 @@
 
+import Link from "next/link";
 import React from "react";
+
 
 const Footer = () => {
   return (
@@ -10,15 +12,13 @@ const Footer = () => {
         </div>
         
         <div className="flex gap-8">
-          <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-            Privacy Policy
-          </a>
-          <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+        
+          <Link href="/terms" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
             Terms of Service
-          </a>
-          <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+          </Link>
+          {/* <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
             Contact
-          </a>
+          </a> */}
         </div>
       </div>
     </footer>
