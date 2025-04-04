@@ -3,27 +3,32 @@ description:
 globs: *.ts, *.tsx, src/**/*.{ts,tsx,js,json}, App.tsx,
 alwaysApply: false
 ---
-# Project Structure and Development Rules
+---
+description: 
+globs: *.ts, *.tsx, src/**/*.{ts,tsx,js,json}, App.tsx,
+alwaysApply: false
+---
+# Project Architecture & Development Rules
 
-## 1. Project Organization
+## 1. Project Structure
 ```
 src/
 ├── assets/        # Images, icons, fonts, and other static assets
 ├── components/    # Reusable UI components
-├── context/       # React Context providers
+├── config/        # App configuration files
+├── context/       # React Context providers (ThemeContext, etc.)
 ├── hooks/         # Custom React hooks
 ├── lang/          # i18n translation files
-├── models/        # Data models and screen-specific interfaces
+├── models/        # Data models and interfaces
 ├── navigation/    # Navigation configuration
 ├── redux/         # State management
 ├── screens/       # Screen components
 ├── styles/        # Global styles and themes
-├── typings/       # Global or app-wide TypeScript types
-├── constants/     # Global constants
+├── typings/       # Global TypeScript types
 └── utils/         # Utility functions
 ```
 
-## 2. Design Implementation Steps
+## 2. Development Workflow
 
 ### 2.1 Pre-Development Checklist
 - [ ] Review Figma design thoroughly
@@ -33,185 +38,476 @@ src/
 - [ ] List all static strings for i18n
 - [ ] Identify required assets (icons, images)
 
-### 2.2 Component Development Order
+### 2.2 Implementation Order
 1. Add new colors to `styles/colors.ts`
-2. Add translations to language files
+2. Add translations to language files (`en.json` and `ar.json`)
 3. Create/update reusable components
 4. Implement screen layout
 5. Add navigation (if needed)
-6. Implement business logic
+6. Implement Redux actions/reducers
+7. Connect UI to state management
+8. Test dark/light themes and RTL/LTR support
 
-## 3. Component Creation Rules
+## 3. Component Standards
 
+### 3.1 Text & Internationalization
 
-### 3.1 Text Usage and Internationalization
-
-DO:
+**ALWAYS use TextComp for text**:
 ```typescript
-// Always use TextComp with translation keys
+// ✓ CORRECT: TextComp with translation keys
 import TextComp from '@/components/TextComp';
 
 <TextComp text="WELCOME_MESSAGE" />
-```
-Translation Keys:
-- Use UPPERCASE for keys
-- Use underscores for spaces
-- Group by feature/screen
-- Include all languages simultaneously
-- Define keys in both `en.json` and `ar.json`:
 
-```json
-// src/lang/en.json
-{
-    "LOGIN": "Login",
-    "SIGNUP": "Sign Up",
-    "WELCOME_MESSAGE": "Welcome back!"
-}
-
-// src/lang/ar.json
-{
-    "LOGIN": "تسجيل الدخول",
-    "SIGNUP": "اشتراك",
-    "WELCOME_MESSAGE": "مرحبا بعودتك!"
-}
+// For dynamic text without translation:
+<TextComp isDynamic text="Hello World" />
 ```
 
-DON'T:
+**NEVER use direct Text component**:
 ```typescript
-// Don't use direct Text component
+// ✗ INCORRECT: Direct Text component
 import { Text } from 'react-native';
 
 <Text>Welcome</Text>
 ```
 
-## 4. Internationalization Rules
+### 3.2 Translation Keys
 
-### 4.1 Translation Keys
-- Use UPPERCASE and underscores
-- Define keys in all languages
-- Use variables in keys like:
+Define translation keys in both language files:
 ```json
-"HELLO_USER": "Hello {{value}}"
-```
+// src/lang/en.json
+{
+    "LOGIN": "Login",
+    "WELCOME_MESSAGE": "Welcome to NativeCraft"
+}
 
-### 4.2 Usage in Components
-
-```tsx
-<TextComp text="HELLO_USER" values={{ value: userData.name }} />
-```
-
-## 5. Style Organization
-
-### 5.1 Colors
-Use `colors.ts` with semantic naming and light/dark support:
-```ts
-export const commonColors = {
-  primary: '#00A13A',
-  error: '#FF0000',
-  gray100: '#EFF0F6',
-};
-```
-
-### 5.2 RTL Support
-```tsx
-flexDirection: isRTL ? 'row-reverse' : 'row'
-```
-
-## 6. Component Props Pattern
-
-```ts
-interface ComponentProps {
-  onPress: () => void;
-  title: string;
-  disabled?: boolean;
-  variant?: 'primary' | 'secondary';
-  style?: ViewStyle;
-  textStyle?: TextStyle;
+// src/lang/ar.json
+{
+    "LOGIN": "تسجيل الدخول",
+    "WELCOME_MESSAGE": "مرحبًا بك في NativeCraft"
 }
 ```
 
-## 7. File Naming Conventions
+Translation key guidelines:
+- Use UPPERCASE with underscores for spaces
+- Group related keys together
+- Use variables with double curly braces:
+  ```json
+  "HELLO_USER": "Hello {{name}}"
+  ```
+- Reference variables in components:
+  ```tsx
+  <TextComp text="HELLO_USER" values={{ name: user.name }} />
+  ```
 
-- Components: `PascalCase.tsx`
-- Hooks/utils: `camelCase.ts`
-- Constants: `UPPER_CASE.ts`
+## 4. Theme Management
 
-## 8. Import Order
-```ts
-// 1. React
-// 2. Third-party libs
-// 3. Project components
-// 4. Hooks
-// 5. Utils/styles/constants
+### 4.1 Using Theme Colors
+
+Access theme colors through the useTheme hook:
+```typescript
+import { useTheme } from '@/context/ThemeContext';
+import { Colors } from '@/styles/colors';
+
+const MyComponent = () => {
+  const { theme } = useTheme();
+  const colors = Colors[theme];
+  
+  return (
+    <View style={{ backgroundColor: colors.background }}>
+      <Text style={{ color: colors.text }}>Hello</Text>
+    </View>
+  );
+};
 ```
 
-## 9. Screen Development Checklist
+### 4.2 Creating Color Themes
 
-1. ✓ Add translations
-2. ✓ Add new colors
-3. ✓ Reuse components
-4. ✓ Set up navigation
-5. ✓ RTL support
-6. ✓ Error handling
-7. ✓ Test Light/Dark mode
-8. ✓ Test LTR/RTL
+Define colors in `styles/colors.ts` with semantic naming:
+```typescript
+export const commonColors = {
+  primary: '#007AFF',
+  success: '#34C759',
+  error: '#FF3B30',
+  warning: '#FF9500',
+};
 
+export const Colors = {
+  light: {
+    background: '#FFFFFF',
+    surface: '#F2F2F7',
+    text: '#000000',
+    textSecondary: '#3C3C43',
+    // Reference common colors
+    ...commonColors,
+  },
+  dark: {
+    background: '#000000',
+    surface: '#1C1C1E',
+    text: '#FFFFFF',
+    textSecondary: '#EBEBF5',
+    // Reference common colors
+    ...commonColors,
+  },
+};
+```
 
-## 10. Screen Creation Guidelines
+## 5. RTL Support
 
-Follow this structure when creating new screens:
+### 5.1 Using the RTL Hook
 
-### 11 File Structure
+```typescript
+import useIsRTL from '@/hooks/useIsRTL';
 
-- Each screen should have its own folder inside `src/screens/`
-- Folder name must follow PascalCase (e.g., `Login`, `Onboard`)
-- Inside each folder:
-  - `ScreenName.tsx`: Main screen component
-  - `styles.ts`: RTL-aware StyleSheet using `useIsRTL`
+const Component = () => {
+  const isRTL = useIsRTL();
+  
+  return (
+    <View style={{
+      flexDirection: isRTL ? 'row-reverse' : 'row',
+      alignItems: 'center',
+    }}>
+      {/* Components */}
+    </View>
+  );
+};
+```
 
-📁 Example:
+### 5.2 RTL-Aware StyleSheets
+
+Create RTL-aware styles using custom hooks:
+```typescript
+const useRTLStyles = (isRTL: boolean, theme: ThemeType) => {
+  const colors = Colors[theme];
+  
+  return useMemo(() => StyleSheet.create({
+    container: {
+      flexDirection: isRTL ? 'row-reverse' : 'row',
+      textAlign: isRTL ? 'right' : 'left',
+      // Other styles
+    },
+    // Other style objects
+  }), [isRTL, theme, colors]);
+};
+
+// Usage in component:
+const styles = useRTLStyles(isRTL, theme);
+```
+
+## 6. Component Creation
+
+### 6.1 Props Interface Pattern
+
+```typescript
+interface ButtonCompProps {
+  text: string;
+  onPress: () => void;
+  isLoading?: boolean;
+  disabled?: boolean;
+  variant?: 'primary' | 'secondary' | 'outline';
+  style?: ViewStyle;
+  textStyle?: TextStyle;
+}
+
+const ButtonComp: React.FC<ButtonCompProps> = ({
+  text,
+  onPress,
+  isLoading = false,
+  disabled = false,
+  variant = 'primary',
+  style,
+  textStyle,
+}) => {
+  // Component implementation
+};
+```
+
+### 6.2 Component Documentation
+
+Use TypeDoc style comments for component documentation:
+```typescript
+/**
+ * A reusable button component with loading state and variants
+ * 
+ * @component
+ * @example
+ * <ButtonComp 
+ *   text="LOGIN" 
+ *   onPress={handleLogin}
+ *   variant="primary"
+ *   isLoading={isLoading}
+ * />
+ */
+const ButtonComp: React.FC<ButtonCompProps> = (props) => {
+  // Component implementation
+};
+```
+
+## 7. File Naming & Organization
+
+- **Components**: Use PascalCase with 'Comp' suffix (e.g., `ButtonComp.tsx`)
+- **Screens**: Use PascalCase in their own folder (e.g., `Login/Login.tsx`)
+- **Hooks**: Use camelCase with 'use' prefix (e.g., `useIsRTL.ts`)
+- **Utilities**: Use camelCase (e.g., `secureStorage.ts`)
+- **Models/Types**: Use PascalCase for interfaces/types (e.g., `AuthTypes.ts`)
+
+## 8. Import Order
+
+```typescript
+// 1. React and React Native imports
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, Pressable } from 'react-native';
+
+// 2. Third-party libraries
+import { useTranslation } from 'react-i18next';
+import { useNavigation } from '@react-navigation/native';
+
+// 3. Project components
+import TextComp from '@/components/TextComp';
+import ButtonComp from '@/components/ButtonComp';
+
+// 4. Hooks, contexts and Redux
+import { useTheme } from '@/context/ThemeContext';
+import useIsRTL from '@/hooks/useIsRTL';
+import { useSelector, useDispatch } from '@/redux/hooks';
+
+// 5. Actions, types, and utilities
+import actions from '@/redux/actions';
+import { AuthStackParamList } from '@/navigation/types';
+import { secureStorage } from '@/utils/secureStorage';
+
+// 6. Styles and constants
+import { Colors } from '@/styles/colors';
+import fontFamily from '@/styles/fontFamily';
+import { moderateScale } from '@/styles/scaling';
+```
+
+## 9. Screen Development Guidelines
+
+### 9.1 File Structure
+
+Each screen should have its own folder:
 ```
 screens/
 └── Login/
     ├── Login.tsx      # Main screen component
-    └── styles.ts      # RTL-aware styles
+    ├── styles.ts      # RTL-aware styles
+    └── login.types.ts # Screen-specific types
 ```
 
-### 12 Component & Layout Standards
+### 9.2 Screen Template
 
-- Wrap the screen with `WrapperContainer`
-- Use `TextComp` for text and `TextInputComp` for inputs
-- Use `ButtonComp` for actions
-- Get theme colors from `useTheme()`
-- Handle RTL logic using `useIsRTL()` and `useRTLStyles()`
-- Organize content into logical sections:
-  - Header (e.g., back button)
-  - Title + Subtitle
-  - Input section
-  - Button section
-  - Terms or footer info
+```typescript
+/**
+ * Login screen component for user authentication
+ */
+import React, { useState } from 'react';
+import { View } from 'react-native';
+import WrapperContainer from '@/components/WrapperContainer';
+import HeaderComp from '@/components/HeaderComp';
+import TextComp from '@/components/TextComp';
+import TextInputComp from '@/components/TextInputComp';
+import ButtonComp from '@/components/ButtonComp';
+import { useTheme } from '@/context/ThemeContext';
+import useIsRTL from '@/hooks/useIsRTL';
+import useRTLStyles from './styles';
+import actions from '@/redux/actions';
+import { useDispatch } from '@/redux/hooks';
 
-### 12.1 Navigation
+const Login = () => {
+  const { theme } = useTheme();
+  const isRTL = useIsRTL();
+  const styles = useRTLStyles(isRTL, theme);
+  const dispatch = useDispatch();
+  
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  
+  const handleLogin = async () => {
+    setLoading(true);
+    try {
+      await dispatch(actions.login({ email, password }));
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  return (
+    <WrapperContainer style={styles.container}>
+      <HeaderComp title="LOGIN" showBack={true} />
+      
+      <View style={styles.content}>
+        <TextComp text="WELCOME_BACK" style={styles.title} />
+        
+        <TextInputComp
+          label="EMAIL"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+        />
+        
+        <TextInputComp
+          label="PASSWORD"
+          value={password}
+          onChangeText={setPassword}
+          isPassword
+        />
+        
+        <ButtonComp
+          text="LOGIN"
+          onPress={handleLogin}
+          isLoading={loading}
+        />
+      </View>
+    </WrapperContainer>
+  );
+};
 
-- Use `useNavigation()` with correct typed prop from `navigation/types.ts`
-```ts
-const navigation = useNavigation<NativeStackNavigationProp<AuthStackParamList, 'Login'>>();
+export default Login;
 ```
 
-### 12.2 Spacing and Styling
+### 9.3 Style Organization
 
-- Use `moderateScale()` for all margins, paddings, font sizes, and gaps
-- Never hardcode numbers in styles or inline JSX
-- Avoid defining `StyleSheet.create` inside screen files
+Keep styles in a separate file using the RTL-aware pattern:
+```typescript
+// styles.ts
+import { StyleSheet } from 'react-native';
+import { Colors, ThemeType } from '@/styles/colors';
+import fontFamily from '@/styles/fontFamily';
+import { moderateScale } from '@/styles/scaling';
+import { useMemo } from 'react';
 
-### 13 Reusability from Figma
+const useRTLStyles = (isRTL: boolean, theme: ThemeType) => {
+  const colors = Colors[theme];
+  
+  return useMemo(() => StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: colors.background,
+    },
+    content: {
+      flex: 1,
+      padding: moderateScale(16),
+    },
+    title: {
+      fontFamily: fontFamily.bold,
+      fontSize: moderateScale(24),
+      marginBottom: moderateScale(32),
+      textAlign: isRTL ? 'right' : 'left',
+    },
+  }), [isRTL, theme, colors]);
+};
 
-Before implementing any screen:
+export default useRTLStyles;
+```
 
-- **Analyze the provided Figma design thoroughly**
-- Identify UI blocks or repeated views that should be made reusable
-- **Check the `components/` folder** to see if similar components already exist
-- **Do not create a new component** if a reusable one already exists
-- Only create a new component if:
-  - The UI block doesn't exist at all
-  - The existing component cannot be reused through props or styling overrides
+## 10. Responsive Design
+
+Always use scaling utilities for responsive dimensions:
+```typescript
+import { moderateScale, horizontalScale, verticalScale } from '@/styles/scaling';
+
+const styles = StyleSheet.create({
+  container: {
+    padding: moderateScale(16),
+    marginHorizontal: horizontalScale(20),
+    marginVertical: verticalScale(10),
+  },
+  title: {
+    fontSize: moderateScale(24),
+    lineHeight: moderateScale(32),
+  },
+});
+```
+
+## 11. Security & Storage
+
+Use secure storage for sensitive data:
+```typescript
+import { secureStorage } from '@/utils/secureStorage';
+
+// Store data
+await secureStorage.setItem('AUTH_TOKEN', token);
+await secureStorage.setObject('USER_DATA', userData);
+
+// Retrieve data
+const token = await secureStorage.getItem('AUTH_TOKEN');
+const userData = await secureStorage.getObject('USER_DATA');
+
+// Remove data
+await secureStorage.removeItem('AUTH_TOKEN');
+```
+
+## 12. API Integration
+
+Use Redux actions for API calls:
+```typescript
+// In redux/actions/authActions.ts
+import apiInstance from '@/config/api';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+
+export const login = createAsyncThunk(
+  'auth/login',
+  async (credentials, { rejectWithValue }) => {
+    try {
+      const response = await apiInstance.post('/auth/login', credentials);
+      // Handle successful login
+      return response.data;
+    } catch (error) {
+      // Handle error
+      return rejectWithValue(error.response?.data || 'Login failed');
+    }
+  }
+);
+
+// In component
+import actions from '@/redux/actions';
+import { useDispatch } from '@/redux/hooks';
+
+const dispatch = useDispatch();
+await dispatch(actions.login(credentials));
+```
+
+## 13. SVG Usage
+
+Use SVG files directly as components:
+```typescript
+// Import SVG file
+import Logo from '@/assets/icons/logo.svg';
+
+// Use as component
+<Logo width={100} height={100} fill={colors.primary} />
+```
+
+## 14. Documentation Standards
+
+Use TypeDoc style comments for documenting code:
+```typescript
+/**
+ * @file App.tsx
+ * @description Root application component that initializes core app functionality
+ */
+
+/**
+ * Main application component that serves as the entry point for the app.
+ * 
+ * @returns {JSX.Element | null} The rendered app or null during font loading
+ */
+const App = () => {
+  // Implementation
+};
+```
+
+## 15. Testing Checklist
+
+Before completing a feature:
+1. ✓ Test on both iOS and Android
+2. ✓ Test with different text lengths
+3. ✓ Test Dark/Light themes
+4. ✓ Test RTL/LTR layouts
+5. ✓ Test different screen sizes
+6. ✓ Test with slow network conditions
+7. ✓ Test error states and edge cases
