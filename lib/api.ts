@@ -1,7 +1,7 @@
 // lib/api.ts
 import { appEvents } from '@/config/customEvents'
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL
+const BASE_URL = process.env.API_URL
 
 export async function submitAppBuild(formData: any) {
   const res = await fetch(`${BASE_URL}/api/build-app`, {
