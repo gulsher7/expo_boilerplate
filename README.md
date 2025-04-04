@@ -1,12 +1,14 @@
 # NativeCraft - React Native Mobile App
 
-![React Native](https://img.shields.io/badge/React_Native-0.76.3-blue)
+![React Native](https://img.shields.io/badge/React_Native-0.76.9-blue)
 ![Expo](https://img.shields.io/badge/Expo-52.0.16-white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.3.3-blue)
 
 ## Project Overview
 
 NativeCraf is a React Native mobile application built with TypeScript and Expo. It features robust authentication, RTL/LTR language support, dark/light theme capabilities, and a modern UI experience. The app follows a structured architecture with a focus on reusability, scalability, and maintainability.
+
+[Check out the app demo video](https://github.com/user-attachments/assets/cb478a0a-a574-4f5e-987a-74bcb6f0e18a)
 
 ## Project Architecture
 

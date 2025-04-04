@@ -42,7 +42,7 @@ const lightColors = {
     inputBorder: commonColors.gray100,
     inputPlaceholder: commonColors.blackOpacity60,
     inputText: commonColors.black,
-    
+    statusBar: 'dark-content',
 
     // Buttons
     buttonPrimary: commonColors.primary,
@@ -60,6 +60,7 @@ const darkColors = {
     surface: commonColors.gray600,
     text: commonColors.white,
     textSecondary: commonColors.gray300,
+    statusBar: 'light-content',
 
     // Components
     inputBackground: commonColors.gray600,

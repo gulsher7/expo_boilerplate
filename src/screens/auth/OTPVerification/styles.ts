@@ -8,9 +8,7 @@ const useRTLStyles = (isRTL: boolean, theme?: ThemeType) => {
     const colors = Colors[theme];
 
     return useMemo(() => StyleSheet.create({
-        header: {
-            marginHorizontal: moderateScale(16),
-        },
+     
         container: {
             flex: 1,
             backgroundColor: colors.background,

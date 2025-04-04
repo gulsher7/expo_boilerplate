@@ -41,7 +41,7 @@ const OTPVerification: React.FC<OTPVerificationProps> = ({ route }) => {
 
     return (
         <WrapperContainer style={styles.container}>
-            <HeaderComp customStyle={styles.header} showBack />
+            <HeaderComp showBack />
 
             <View style={styles.content}>
                 <View>
