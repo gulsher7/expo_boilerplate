@@ -3,12 +3,7 @@ description:
 globs: *.ts, *.tsx, src/**/*.{ts,tsx,js,json}, App.tsx,
 alwaysApply: false
 ---
----
-description: 
-globs: *.ts, *.tsx, src/**/*.{ts,tsx,js,json}, App.tsx,
-alwaysApply: false
----
-# Project Architecture & Development Rules
+# NativeCraft - Project Architecture & Development Rules
 
 ## 1. Project Structure
 ```
