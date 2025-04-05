@@ -13,6 +13,7 @@
     "expo-splash-screen": "~0.29.22",
     "i18next": "^24.2.3",
     "intl-pluralrules": "^2.0.1",
+    "patch-package": "^8.0.0",
     "react": "18.3.1",
     "react-i18next": "^15.4.1",
     "react-native": "0.76.9",
@@ -23,12 +24,13 @@
     "react-native-svg": "15.8.0",
     "react-native-svg-transformer": "^1.5.0",
     "react-redux": "^9.2.0",
-    "redux": "^5.0.1"
+    "redux": "^5.0.1",
+    "expo-clipboard": "~7.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",
-    "typescript": "^5.3.3",
-    "@types/react": "~18.3.12"
+    "@types/react": "~18.3.12",
+    "typescript": "^5.3.3"
   },
   "name": "expo_boilerplate",
   "version": "1.0.0",
@@ -37,6 +39,7 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "postinstall": "patch-package"
   }
 }
