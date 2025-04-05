@@ -90,7 +90,7 @@ const AppGenerator: React.FC = () => {
           setIsGenerating(false);
         }
       }, 5000);
-    } catch (error:any) {
+    } catch (error: any) {
       toast.error(error ? error?.message : "Something went wrong");
       setIsGenerating(false);
     }
@@ -109,7 +109,7 @@ const AppGenerator: React.FC = () => {
     setJobId("");
   }, []);
 
-  const downloadMyApp = useCallback(() => {
+  const downloadMyApp = useCallback((jobId: string) => {
     if (jobId) {
       downloadApp(jobId);
       setTimeout(() => {
@@ -230,18 +230,18 @@ const AppGenerator: React.FC = () => {
                     <Check className="h-5 w-5" />
                     <span className="font-medium">App Generated Successfully!</span>
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <Button
                       variant="outline"
                       onClick={resetForm}
-                      className="rounded-xl h-12 border-2 flex items-center gap-2"
+                      className="rounded-xl h-12 border-2 flex items-center justify-center gap-2 w-full"
                     >
                       <Upload className="h-4 w-4" />
                       Create Another App
                     </Button>
                     <Button
-                      className="rounded-xl h-12 bg-gradient-to-r from-primary to-accent hover:opacity-90 flex items-center gap-2"
-                      onClick={downloadMyApp}
+                      className="rounded-xl h-12 bg-gradient-to-r from-primary to-accent hover:opacity-90 flex items-center justify-center gap-2 w-full"
+                      onClick={() => downloadMyApp(jobId)}
                       disabled={!jobId}
                     >
                       <Download className="h-4 w-4" />
