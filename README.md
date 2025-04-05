@@ -67,7 +67,7 @@ src/
 1. Clone the repository
    ```bash
    git clone <repository-url>
-   cd nativecraft
+   cd expo_boilerplate
    ```
 
 2. Install dependencies
