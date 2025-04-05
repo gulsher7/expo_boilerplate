@@ -1,10 +1,11 @@
 
+import './globals.css';
 import ClientAnimatedBackground from '@/components/ui/ClientAnimatedBackground';
 import Footer from '@/components/ui/Footer';
 import Header from '@/components/ui/Header';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import './globals.css';
+import { Toaster } from '@/components/ui/sonner';
 
 
 const inter = Inter({
@@ -16,6 +17,9 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'NativeCraft - Create Beautiful React Native Apps',
   description: 'Transform your app idea into reality with our streamlined generator. No coding required, just customize and build.',
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({
@@ -30,6 +34,7 @@ export default function RootLayout({
         <Header />
         {children}
         <Footer />
+        <Toaster />
         </body>
     </html>
   );

@@ -1,22 +1,26 @@
 // lib/api.ts
-import { appEvents } from '@/config/customEvents'
+import { appEvents } from '@/config/customEvents';
+import axios from 'axios';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL
 
 export async function submitAppBuild(formData: any) {
-  const res = await fetch(`${BASE_URL}/api/build-app`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(formData),
-  });
-  if (!res.ok) throw new Error('Failed to submit build');
-  return res.json();
+  try {
+    const response = await axios.post(`${BASE_URL}/api/build-app`, formData);
+    return response.data;
+  } catch (error: any) {
+    console.log("main error", error?.message);
+    throw error;
+  }
 }
 
 export async function getBuildStatus(jobId: string) {
-  const res = await fetch(`${BASE_URL}/api/build-status/${jobId}`);
-  if (!res.ok) throw new Error('Failed to fetch build status');
-  return res.json();
+  try {
+    const response = await axios.get(`${BASE_URL}/api/build-status/${jobId}`);
+    return response.data;
+  } catch (error: any) {
+    throw error;
+  }
 }
 
 export function downloadApp(jobId: string) {

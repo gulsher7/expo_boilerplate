@@ -42,6 +42,7 @@ const AppGenerator: React.FC = () => {
   const [selectedPlatform, setSelectedPlatform] = useState(PLATFORM_OPTIONS[0].id);
   const [jobId, setJobId] = useState("");
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   // Validate form
   // const isFormValid = appName.trim() !== "" && bundleId.trim() !== "" && appIcon !== null;
@@ -89,9 +90,8 @@ const AppGenerator: React.FC = () => {
           setIsGenerating(false);
         }
       }, 5000);
-    } catch (err) {
-      console.error(err);
-      toast.error("Something went wrong");
+    } catch (error:any) {
+      toast.error(error ? error?.message : "Something went wrong");
       setIsGenerating(false);
     }
   }, [appName, bundleId, isFormValid]);
