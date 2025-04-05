@@ -1,11 +1,5 @@
-'use client'
-
-import React from "react";
-import Header from "@/components/ui/Header";
-import Footer from "@/components/ui/Footer";
-import { Shield, ShieldCheck, CheckCircle } from "lucide-react";
-import { motion } from "framer-motion";
 import { Separator } from "@/components/ui/separator";
+import { CheckCircle, Shield, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 
 const Terms = () => {
@@ -54,11 +48,10 @@ const Terms = () => {
 
       
       <main className="flex-1 container mx-auto py-12 px-4">
-        <motion.div 
+        <div 
           className="mb-12 text-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+
+      
         >
           <div className="flex justify-center mb-4">
             <div className="relative">
@@ -70,16 +63,13 @@ const Terms = () => {
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Please review our terms of service, privacy policy, and other legal agreements.
           </p>
-        </motion.div>
+        </div>
 
         <div className="max-w-4xl mx-auto bg-background/50 backdrop-blur-sm rounded-xl p-8 shadow-sm">
           <div className="space-y-10">
             {termsData.map((section, index) => (
-              <motion.div 
+              <div 
                 key={section.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
               >
                 <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
                   <CheckCircle className="h-5 w-5 text-primary" />
@@ -96,15 +86,13 @@ const Terms = () => {
                 {index < termsData.length - 1 && (
                   <div className="h-8" />
                 )}
-              </motion.div>
+              </div>
             ))}
           </div>
 
-          <motion.div 
+          <div 
             className="mt-10 text-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
+       
           >
             <p className="text-sm text-muted-foreground mb-4">
               Last updated: April 4, 2025
@@ -120,7 +108,7 @@ const Terms = () => {
                 Contact Support
               </a>
             </div>
-          </motion.div>
+          </div>
         </div>
       </main>
       

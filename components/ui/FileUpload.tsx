@@ -1,10 +1,10 @@
-"use client";
+// "use client";
 
 import React, { useState } from "react";
 import { Upload, X, Image } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion";
 
 interface FileUploadProps {
   label: string;
@@ -63,12 +63,11 @@ const FileUpload: React.FC<FileUploadProps> = ({
         >
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-70"></div>
           <div className="flex flex-col items-center justify-center pt-5 pb-6 relative z-10">
-            <motion.div 
-              animate={{ y: [0, -3, 0] }}
-              transition={{ repeat: Infinity, duration: 2 }}
+            <div 
+       
             >
               <Upload className="w-6 h-6 mb-2 text-primary" />
-            </motion.div>
+            </div>
             <p className="text-sm text-center text-primary/80 mb-1">
               <span className="font-medium">Click to upload</span> or drag and drop
             </p>
@@ -97,13 +96,12 @@ const FileUpload: React.FC<FileUploadProps> = ({
           >
             <X className="w-4 h-4 text-white" />
           </button>
-          <motion.div 
+          <div 
             className="absolute inset-0 bg-gradient-to-r from-primary/80 to-accent/80 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity"
-            initial={{ opacity: 0 }}
-            whileHover={{ opacity: 1 }}
+           
           >
             <p className="text-white text-sm font-medium">{file.name}</p>
-          </motion.div>
+          </div>
         </div>
       )}
     </div>

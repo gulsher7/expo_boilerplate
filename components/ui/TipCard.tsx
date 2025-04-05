@@ -1,7 +1,6 @@
-"use client";
 import React from "react";
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
+
 
 interface TipCardProps {
   title: string;
@@ -28,19 +27,17 @@ const TipCard: React.FC<TipCardProps> = ({
   const colorClass = cardColors[index % cardColors.length];
   
   return (
-    <motion.div 
+    <div 
       className={cn(
         "colorful-card p-6", 
         colorClass,
         className
       )}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1 }}
+
     >
       <h3 className="text-lg font-bold mb-2">{title}</h3>
       <p className="text-sm opacity-90">{description}</p>
-    </motion.div>
+    </div>
   );
 };
 

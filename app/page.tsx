@@ -1,6 +1,5 @@
 "use client";
 
-import AnimatedBackground from "@/components/ui/AnimatedBackground";
 import AppGenerator from "@/components/ui/AppeGenerator";
 import { motion } from "framer-motion";
 import { Rocket, Smartphone, Sparkles, Star } from "lucide-react";
@@ -38,16 +37,14 @@ export default function Home() {
               { icon: <Star className="h-5 w-5" />, text: "Professional Design" },
               { icon: <Rocket className="h-5 w-5" />, text: "Instant Deployment" }
             ].map((item, index) => (
-              <motion.div 
+              <div 
                 key={index}
                 className="flex items-center gap-2 px-4 py-2 bg-white/80 rounded-full shadow-sm"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.2 + index * 0.1 }}
+            
               >
                 <span className="text-primary">{item.icon}</span>
                 <span className="text-sm font-medium">{item.text}</span>
-              </motion.div>
+              </div>
             ))}
           </div>
         </motion.div>

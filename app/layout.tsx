@@ -1,9 +1,10 @@
-import Header from '@/components/ui/Header';
-import Footer from '@/components/ui/Footer';
-import AnimatedBackground from '@/components/ui/AnimatedBackground';
+
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import Header from '@/components/ui/Header';
+import Footer from '@/components/ui/Footer';
+import AnimatedBackground from '@/components/ui/AnimatedBackground';
 
 const inter = Inter({ subsets: ['latin'] });
 

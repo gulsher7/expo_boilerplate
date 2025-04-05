@@ -15,11 +15,11 @@ import { REACT_NATIVE_TIPS } from "@/constants/tips";
 
 
 const PLATFORM_OPTIONS = [
-  {
-    id: "react-native-cli",
-    name: "React Native CLI",
-    icon: <Smartphone className="h-5 w-5" />
-  },
+  // {
+  //   id: "react-native-cli",
+  //   name: "React Native CLI",
+  //   icon: <Smartphone className="h-5 w-5" />
+  // },
   {
     id: "expo",
     name: "React Native Expo",
@@ -39,7 +39,7 @@ const AppGenerator: React.FC = () => {
   const [isComplete, setIsComplete] = useState(false);
   const [visibleTips, setVisibleTips] = useState<Array<typeof REACT_NATIVE_TIPS[0]>>([]);
   const [tipsIndex, setTipsIndex] = useState(0);
-  // const [selectedPlatform, setSelectedPlatform] = useState(PLATFORM_OPTIONS[0].id);
+  const [selectedPlatform, setSelectedPlatform] = useState(PLATFORM_OPTIONS[0].id);
   const [jobId, setJobId] = useState("");
 
   // Validate form
@@ -123,7 +123,7 @@ const AppGenerator: React.FC = () => {
 
           <div className="space-y-6 relative z-10">
 
-            {/* <div className="space-y-3">
+            <div className="space-y-3">
               <Label className="text-base">Select Platform <span className="text-red-500">*</span></Label>
               <div className="grid grid-cols-2 gap-4">
                 {PLATFORM_OPTIONS.map((platform) => (
@@ -145,7 +145,7 @@ const AppGenerator: React.FC = () => {
                   </div>
                 ))}
               </div>
-            </div> */}
+            </div>
 
             <div className="space-y-2">
               <Label htmlFor="app-name" className="text-base">App Name <span className="text-red-500">*</span></Label>
