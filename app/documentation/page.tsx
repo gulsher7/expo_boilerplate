@@ -125,7 +125,7 @@ const DocumentationPage = () => {
             <p>Clone the repository</p>
             <pre className="bg-gray-100 dark:bg-gray-800 p-3 rounded-lg overflow-auto text-sm">
 {`git clone <repository-url>
-cd nativecraft`}
+cd expo_boilerplate`}
             </pre>
           </li>
           <li>
