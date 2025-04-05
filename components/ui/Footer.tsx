@@ -20,7 +20,7 @@ const Footer = () => {
             <span className="md:inline">LinkedIn</span>
           </Link>
           <Link href="https://x.com/GulsherKhanDev1" className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">
-            <img height="14" width="14" src="https://w7.pngwing.com/pngs/748/680/png-transparent-twitter-x-logo.png" />
+            <img loading="lazy" height="14" width="14" src="https://w7.pngwing.com/pngs/748/680/png-transparent-twitter-x-logo.png" alt="Twitter" />
             {/* <span className="md:inline">X</span> */}
           </Link>
         </div>

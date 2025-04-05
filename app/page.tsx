@@ -1,7 +1,4 @@
-"use client";
-
 import AppGenerator from "@/components/ui/AppeGenerator";
-import { motion } from "framer-motion";
 import { Rocket, Smartphone, Sparkles, Star } from "lucide-react";
 
 export default function Home() {
@@ -10,11 +7,8 @@ export default function Home() {
     <div className="min-h-screen flex flex-col">    
     <div className="flex-1 flex flex-col">      
       <main className="flex-1 container mx-auto py-12 px-4">
-        <motion.div 
+        <div 
           className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/30 text-primary mb-6">
             <Sparkles className="h-4 w-4" />
@@ -47,7 +41,7 @@ export default function Home() {
               </div>
             ))}
           </div>
-        </motion.div>
+        </div>
         
         <AppGenerator />
       </main>

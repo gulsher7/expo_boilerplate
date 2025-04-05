@@ -4,9 +4,15 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Header from '@/components/ui/Header';
 import Footer from '@/components/ui/Footer';
-import AnimatedBackground from '@/components/ui/AnimatedBackground';
+import dynamic from 'next/dynamic';
+import ClientAnimatedBackground from '@/components/ui/ClientAnimatedBackground';
 
-const inter = Inter({ subsets: ['latin'] });
+
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '600', '700'], // Specify only the weights you use
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: 'NativeCraft - Create Beautiful React Native Apps',
@@ -21,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <AnimatedBackground />
+        <ClientAnimatedBackground />
         <Header />
         {children}
         <Footer />
