@@ -7,7 +7,7 @@ import { Separator } from "@/components/ui/separator";
 import { downloadApp, getBuildStatus, submitAppBuild } from "@/lib/api";
 import { motion } from "framer-motion";
 import { Check, Download, Loader, Smartphone, Sparkles, Upload } from "lucide-react";
-import React, { useState } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import { toast } from "sonner";
 // import ProgressBar from "./ProgressBar";
 import TipCard from "./TipCard";
@@ -41,54 +41,62 @@ const AppGenerator: React.FC = () => {
   const [tipsIndex, setTipsIndex] = useState(0);
   const [selectedPlatform, setSelectedPlatform] = useState(PLATFORM_OPTIONS[0].id);
   const [jobId, setJobId] = useState("");
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // Validate form
   // const isFormValid = appName.trim() !== "" && bundleId.trim() !== "" && appIcon !== null;
   const isFormValid = appName.trim() !== "" && bundleId.trim() !== "";
 
+  // Cleanup polling interval on unmount
+  useEffect(() => {
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, []);
+
   // Handle form submission
-
-
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     if (!isFormValid) {
       toast.error("Please fill in all required fields");
       return;
     }
+
     try {
       const formData = { appName, bundleId };
       const response = await submitAppBuild(formData);
       toast.success("App build started");
 
       setIsGenerating(true);
-      
+
       // Select three random tips from REACT_NATIVE_TIPS
       const shuffledTips = [...REACT_NATIVE_TIPS].sort(() => 0.5 - Math.random());
       const randomThreeTips = shuffledTips.slice(0, 3);
       setVisibleTips(randomThreeTips);
 
-      const interval = setInterval(async () => {
+      intervalRef.current = setInterval(async () => {
         const statusRes = await getBuildStatus(response.jobId);
         if (statusRes.status === "completed") {
-          clearInterval(interval);
+          if (intervalRef.current) clearInterval(intervalRef.current);
           toast.success("Build completed!");
-          setIsComplete(true)
-          setJobId(response.jobId)
-          setIsGenerating(false)
-        } else if (statusRes.status === "failed") {``
-          clearInterval(interval);
+          setIsComplete(true);
+          setJobId(response.jobId);
+          setIsGenerating(false);
+        } else if (statusRes.status === "failed") {
+          if (intervalRef.current) clearInterval(intervalRef.current);
           toast.error("Build failed");
-          setIsGenerating(false)
+          setIsGenerating(false);
         }
       }, 5000);
     } catch (err) {
       console.error(err);
       toast.error("Something went wrong");
-      setIsGenerating(false)
+      setIsGenerating(false);
     }
-  };
+  }, [appName, bundleId, isFormValid]);
 
-
-  const resetForm = () => {
+  const resetForm = useCallback(() => {
     setAppName("");
     setBundleId("");
     setAppIcon(null);
@@ -98,7 +106,17 @@ const AppGenerator: React.FC = () => {
     setIsComplete(false);
     setVisibleTips([]);
     setTipsIndex(0);
-  };
+    setJobId("");
+  }, []);
+
+  const downloadMyApp = useCallback(() => {
+    if (jobId) {
+      downloadApp(jobId);
+      setTimeout(() => {
+        resetForm()
+      }, 400);
+    }
+  }, [jobId]);
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 animate-fade-in">
@@ -130,11 +148,10 @@ const AppGenerator: React.FC = () => {
                   <div
                     key={platform.id}
                     onClick={() => setSelectedPlatform(platform.id)}
-                    className={`p-4 rounded-xl border-2 transition-all cursor-pointer relative overflow-hidden ${
-                      selectedPlatform === platform.id 
-                        ? "border-primary bg-primary/10 shadow-lg" 
-                        : "border-primary/10 hover:border-primary/30"
-                    }`}
+                    className={`p-4 rounded-xl border-2 transition-all cursor-pointer relative overflow-hidden ${selectedPlatform === platform.id
+                      ? "border-primary bg-primary/10 shadow-lg"
+                      : "border-primary/10 hover:border-primary/30"
+                      }`}
                   >
                     <div className="flex items-center gap-2 mb-2">
                       <div className={`${selectedPlatform === platform.id ? "text-primary" : "text-muted-foreground"}`}>
@@ -224,7 +241,7 @@ const AppGenerator: React.FC = () => {
                     </Button>
                     <Button
                       className="rounded-xl h-12 bg-gradient-to-r from-primary to-accent hover:opacity-90 flex items-center gap-2"
-                      onClick={() => downloadApp(jobId)}
+                      onClick={downloadMyApp}
                       disabled={!jobId}
                     >
                       <Download className="h-4 w-4" />
@@ -301,7 +318,7 @@ const AppGenerator: React.FC = () => {
               {/* <p className="text-muted-foreground max-w-md mb-6">
                 Fill out the form with your app details, upload your assets, and watch as your React Native app comes to life.
               </p> */}
-                 <p className="text-muted-foreground max-w-md mb-6">
+              <p className="text-muted-foreground max-w-md mb-6">
                 Fill out the form with your app details, and watch as your React Native app comes to life.
               </p>
               <div className="flex flex-wrap justify-center gap-2">

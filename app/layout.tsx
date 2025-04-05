@@ -1,11 +1,10 @@
 
-import './globals.css';
+import ClientAnimatedBackground from '@/components/ui/ClientAnimatedBackground';
+import Footer from '@/components/ui/Footer';
+import Header from '@/components/ui/Header';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import Header from '@/components/ui/Header';
-import Footer from '@/components/ui/Footer';
-import dynamic from 'next/dynamic';
-import ClientAnimatedBackground from '@/components/ui/ClientAnimatedBackground';
+import './globals.css';
 
 
 const inter = Inter({
