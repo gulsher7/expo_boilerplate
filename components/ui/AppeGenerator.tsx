@@ -12,6 +12,10 @@ import { toast } from "sonner";
 // import ProgressBar from "./ProgressBar";
 import TipCard from "./TipCard";
 import { REACT_NATIVE_TIPS } from "@/constants/tips";
+import { appEvents } from "@/config/customEvents";
+import { generateCustomId } from "@/lib/utils";
+
+
 
 
 const PLATFORM_OPTIONS = [
@@ -64,6 +68,15 @@ const AppGenerator: React.FC = () => {
       return;
     }
 
+
+    const app_id = generateCustomId()
+    appEvents({
+      eventName: "build_initiated",
+      payload: {
+        app_id: app_id
+      }
+    });
+
     try {
       const formData = { appName, bundleId };
       const response = await submitAppBuild(formData);
@@ -84,15 +97,33 @@ const AppGenerator: React.FC = () => {
           setIsComplete(true);
           setJobId(response.jobId);
           setIsGenerating(false);
+          appEvents({
+            eventName: "build_succeeded",
+            payload: {
+              app_id: app_id
+            }
+          });
         } else if (statusRes.status === "failed") {
           if (intervalRef.current) clearInterval(intervalRef.current);
           toast.error("Build failed");
           setIsGenerating(false);
+          appEvents({
+            eventName: "build_failed",
+            payload: {
+              app_id: app_id
+            }
+          });
         }
       }, 5000);
     } catch (error: any) {
       toast.error(error ? error?.message : "Something went wrong");
       setIsGenerating(false);
+      appEvents({
+        eventName: "build_failed",
+        payload: {
+          app_id: app_id
+        }
+      });
     }
   }, [appName, bundleId, isFormValid]);
 
