@@ -39,5 +39,6 @@
     "THEME": "Theme",
     "LIGHT": "Light",
     "DARK": "Dark",
-    "LOGOUT": "Logout"
+    "LOGOUT": "Logout",
+    "PROFILE": "Profile"
 }
