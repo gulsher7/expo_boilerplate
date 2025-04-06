@@ -14,7 +14,7 @@ import TipCard from "./TipCard";
 import { REACT_NATIVE_TIPS } from "@/constants/tips";
 import { appEvents } from "@/config/customEvents";
 import { generateCustomId } from "@/lib/utils";
-
+import VideoComp from "./VideoComp";
 
 
 
@@ -297,7 +297,7 @@ const AppGenerator: React.FC = () => {
 
         {/* Tips Section */}
         <motion.div
-          className="space-y-8 py-4"
+          className={isComplete ? "space-y-8" : "space-y-8 py-4"}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
@@ -319,12 +319,12 @@ const AppGenerator: React.FC = () => {
                       <Check className="h-5 w-5 text-green-500" />
                       <Sparkles className="h-3 w-3 absolute -top-1 -right-1 text-amber-400" />
                     </div>
-                    <h2 className="text-xl font-bold bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent">Build Complete!</h2>
+                    <h2 className="text-xl font-bold bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent">{isComplete ? "See Your App in Action" : "Building your React Native app..."}</h2>
                   </div>
                 )}
               </div>
 
-              <div className="space-y-6">
+              {isComplete ? <VideoComp /> : <div className="space-y-6">
                 {visibleTips.map((tip, index) => (
                   <TipCard
                     key={index}
@@ -333,7 +333,7 @@ const AppGenerator: React.FC = () => {
                     index={index}
                   />
                 ))}
-              </div>
+              </div>}
             </>
           ) : (
             <div className="h-full flex flex-col items-center justify-center text-center p-8 glassmorphism rounded-2xl border-2 border-primary/10">
