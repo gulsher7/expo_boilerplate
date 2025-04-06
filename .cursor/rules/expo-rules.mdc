@@ -403,12 +403,12 @@ export default useRTLStyles;
 
 Always use scaling utilities for responsive dimensions:
 ```typescript
-import { moderateScale, horizontalScale, verticalScale } from '@/styles/scaling';
+import { moderateScale, verticalScale } from '@/styles/scaling';
 
 const styles = StyleSheet.create({
   container: {
     padding: moderateScale(16),
-    marginHorizontal: horizontalScale(20),
+    marginHorizontal: moderateScale(20),
     marginVertical: verticalScale(10),
   },
   title: {
