@@ -105,7 +105,7 @@ const CharacterCard = ({ item, index, onPress }: CharacterCardProps) => {
 };
 
 const useRTLStyles = (isRTL: boolean, theme: ThemeType) => {
-    const colors = Colors[theme];
+    const colors = Colors[theme ?? 'light'];
 
     return useMemo(() => StyleSheet.create({
         card: {

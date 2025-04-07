@@ -4,8 +4,8 @@ import { Colors, commonColors, ThemeType } from '@/styles/colors';
 import fontFamily from '@/styles/fontFamily';
 import { moderateScale } from '@/styles/scaling';
 
-const useRTLStyles = (isRTL: boolean, theme?: ThemeType) => {
-    const colors = Colors[theme];
+const useRTLStyles = (isRTL: boolean, theme: ThemeType) => {
+    const colors = Colors[theme ?? 'light'];
    
     return useMemo(() => StyleSheet.create({
         container: {

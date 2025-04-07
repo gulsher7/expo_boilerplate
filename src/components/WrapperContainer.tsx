@@ -15,17 +15,15 @@ const WrapperContainer: React.FC<WrapperContainerProps> = ({
     ...safeAreaProps
 }) => {
     const { theme } = useTheme();
-    const colors = Colors[theme];
+    const colors = Colors[theme ?? 'light'];
 
     return (
-        <SafeAreaView 
-            style={[styles.container, { backgroundColor: colors.background }]} 
+        <SafeAreaView
+            style={[styles.container, style, { backgroundColor: colors.background }]}
             {...safeAreaProps}
         >
             <StatusBar barStyle={colors.statusBar} backgroundColor={colors.background} />
-            <View style={[styles.childContainer, style]}>
-                {children}
-            </View>
+            {children}
         </SafeAreaView>
     );
 };
@@ -33,10 +31,7 @@ const WrapperContainer: React.FC<WrapperContainerProps> = ({
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-    },
-    childContainer: {
-        flex: 1,
-    },
+    }
 });
 
 export default React.memo(WrapperContainer);

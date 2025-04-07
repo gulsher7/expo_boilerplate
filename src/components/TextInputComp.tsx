@@ -40,7 +40,7 @@ const TextInputComp: React.FC<TextInputCompProps> = ({
     const { theme } = useTheme();
     const isRTL = useIsRTL()
     const styles = useRTLStyles(isRTL, theme);
-    const colors = Colors[theme];
+    const colors = Colors[theme ?? 'light'];
 
     return (
         <View

@@ -9,7 +9,7 @@ const CARD_MARGIN = moderateScale(4);
 const CARD_WIDTH = (width - moderateScale(20) - CARD_MARGIN * 2) / 2;
 
 const useRTLStyles = (isRTL: boolean, theme: ThemeType) => {
-    const colors = Colors[theme];
+    const colors = Colors[theme ?? 'light'];
 
     return useMemo(() => StyleSheet.create({
         container: {

@@ -57,7 +57,7 @@ const ModalComp: React.FC<ModalCompProps> = ({
 };
 
 const useStyles = (theme: ThemeType) => {
-    const colors = Colors[theme];
+    const colors = Colors[theme ?? 'light'];;
 
     return StyleSheet.create({
         modal: {

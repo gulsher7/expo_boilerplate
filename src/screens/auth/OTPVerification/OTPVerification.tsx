@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { View, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
@@ -43,54 +43,63 @@ const OTPVerification: React.FC<OTPVerificationProps> = ({ route }) => {
         <WrapperContainer style={styles.container}>
             <HeaderComp showBack />
 
-            <View style={styles.content}>
-                <View>
-                    {/* Title Section */}
-                    <View style={styles.titleSection}>
-                        <TextComp
-                            text='OTP'
-                            style={styles.title}
-                        />
-                        <TextComp
-                            text='OTP_SENT_TO'
-                            values={{ phoneNumber }}
-                            style={styles.subtitle}
-                        />
-                    </View>
+            <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                style={{ flex: 1 }}
+                keyboardVerticalOffset={Platform.OS === 'ios' ? 10 : 0}
+            >
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                    <View style={styles.content}>
+                        <View>
+                            {/* Title Section */}
+                            <View style={styles.titleSection}>
+                                <TextComp
+                                    text='OTP'
+                                    style={styles.title}
+                                />
+                                <TextComp
+                                    text='OTP_SENT_TO'
+                                    values={{ phoneNumber }}
+                                    style={styles.subtitle}
+                                />
+                            </View>
 
-                    {/* OTP Input Section */}
-                    <View style={styles.otpSection}>
-                        <OTPInputView
-                            style={styles.otpInput}
-                            pinCount={6}
-                            code={otp}
-                            onCodeChanged={code => setOtp(code)}
-                            autoFocusOnLoad
-                            codeInputFieldStyle={styles.otpField}
-                            codeInputHighlightStyle={styles.otpFieldFocused}
-                        />
-                    </View>
-                </View>
+                            {/* OTP Input Section */}
+                            <View style={styles.otpSection}>
+                                <OTPInputView
+                                    style={styles.otpInput}
+                                    pinCount={6}
+                                    code={otp}
+                                    onCodeChanged={code => setOtp(code)}
+                                    autoFocusOnLoad
+                                    codeInputFieldStyle={styles.otpField}
+                                    codeInputHighlightStyle={styles.otpFieldFocused}
+                                    keyboardAppearance={theme === 'dark' ? 'dark' : 'light'}
+                                />
+                            </View>
+                        </View>
 
-                <View>
-                    {/* Button Section */}
-                    <View style={styles.buttonSection}>
-                        <ButtonComp
-                            title='CONTINUE'
-                            onPress={handleContinue}
-                            style={styles.continueButton}
-                        // disabled={otp.length !== 6}
-                        />
-                    </View>
+                        <View>
+                            {/* Button Section */}
+                            <View style={styles.buttonSection}>
+                                <ButtonComp
+                                    title='CONTINUE'
+                                    onPress={handleContinue}
+                                    style={styles.continueButton}
+                                // disabled={otp.length !== 6}
+                                />
+                            </View>
 
-                    {/* Resend Section */}
-                    <TextComp
-                        text='RESEND_OTP'
-                        style={styles.resendText}
-                        onPress={handleResendOTP}
-                    />
-                </View>
-            </View>
+                            {/* Resend Section */}
+                            <TextComp
+                                text='RESEND_OTP'
+                                style={styles.resendText}
+                                onPress={handleResendOTP}
+                            />
+                        </View>
+                    </View>
+                </TouchableWithoutFeedback>
+            </KeyboardAvoidingView>
         </WrapperContainer>
     );
 };

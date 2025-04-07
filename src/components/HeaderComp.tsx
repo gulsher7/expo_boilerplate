@@ -157,7 +157,7 @@ const HeaderComp: React.FC<HeaderCompProps> = ({
 
 
 const useRTLStyles = (isRTL: boolean, theme: ThemeType) => {
-    const colors = Colors[theme];
+    const colors = Colors[theme ?? 'light'];
     return StyleSheet.create({
         container: {
             flexDirection: isRTL ? 'row-reverse' : 'row',
