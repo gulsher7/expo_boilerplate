@@ -19,14 +19,14 @@ import VideoComp from "./VideoComp";
 
 
 const PLATFORM_OPTIONS = [
-  // {
-  //   id: "react-native-cli",
-  //   name: "React Native CLI",
-  //   icon: <Smartphone className="h-5 w-5" />
-  // },
   {
     id: "expo",
     name: "React Native Expo",
+    icon: <Smartphone className="h-5 w-5" />
+  },
+  {
+    id: "cli",
+    name: "React Native CLI",
     icon: <Smartphone className="h-5 w-5" />
   }
 ];
@@ -78,7 +78,7 @@ const AppGenerator: React.FC = () => {
     });
 
     try {
-      const formData = { appName, bundleId };
+      const formData = { appName, bundleId, projectType: selectedPlatform };
       const response = await submitAppBuild(formData);
       toast.success("App build started");
 
