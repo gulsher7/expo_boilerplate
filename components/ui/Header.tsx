@@ -15,7 +15,6 @@ import {
 } from "./dropdown-menu";
 
 const COMING_SOON_TECH = [
-  "React Native CLI",
   "React.js",
   "Next.js",
   "Flutter",

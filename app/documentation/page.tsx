@@ -59,7 +59,7 @@ const DocumentationPage = () => {
           </Link>
 
           {/* Coming Soon Cards */}
-          {['Flutter', 'Next.js', 'Native iOS'].map((tech) => (
+          {['React.js','Next.js', 'Flutter','Native iOS'].map((tech) => (
             <div key={tech} className="p-6 rounded-xl border-2 border-primary/10 bg-card/50">
               <h2 className="text-2xl font-bold mb-3 text-muted-foreground">{tech}</h2>
               <p className="text-sm text-muted-foreground">Coming soon...</p>
