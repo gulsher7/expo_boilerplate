@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { BookOpen, ChevronDown, FileCog, Menu, Smartphone, Sparkles } from "lucide-react";
+import { BookOpen, ChevronDown, FileCog, Menu, Smartphone, Sparkles, Users } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./button";
 import { Sheet, SheetContent, SheetTrigger } from "./sheet";
@@ -41,6 +41,17 @@ const Header = () => {
           Documentation
           <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
         </Link>
+        
+        <a 
+          href="https://github.com/gulsher7/nativecraft-community/discussions" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="text-sm font-medium hover:text-primary transition-colors relative group flex items-center gap-2"
+        >
+          <Users className="h-4 w-4" />
+          Community
+          <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
+        </a>
         
         {/* Coming Soon Dropdown - Desktop */}
         <DropdownMenu>
@@ -86,6 +97,17 @@ const Header = () => {
               <BookOpen className="h-5 w-5" />
               Documentation
             </Link>
+            
+            <a 
+              href="https://github.com/gulsher7/nativecraft-community/discussions" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-base font-medium hover:text-primary transition-colors flex items-center gap-2"
+              onClick={() => setIsOpen(false)}
+            >
+              <Users className="h-5 w-5" />
+              Community
+            </a>
             
             {/* Coming Soon Section - Mobile */}
             <div className="w-full flex flex-col items-center">
