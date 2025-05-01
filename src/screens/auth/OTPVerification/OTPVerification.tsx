@@ -10,7 +10,7 @@ import WrapperContainer from '@/components/WrapperContainer';
 import { useTheme } from '@/context/ThemeContext';
 import useIsRTL from '@/hooks/useIsRTL';
 import { AuthStackParamList } from '@/navigation/types';
-import OTPInputView from '@twotalltotems/react-native-otp-input';
+import { OtpInput } from "react-native-otp-entry";
 import useRTLStyles from './styles';
 import { changeFirstTimeState } from '@/redux/actions/auth';
 
@@ -66,15 +66,15 @@ const OTPVerification: React.FC<OTPVerificationProps> = ({ route }) => {
 
                             {/* OTP Input Section */}
                             <View style={styles.otpSection}>
-                                <OTPInputView
-                                    style={styles.otpInput}
-                                    pinCount={6}
-                                    code={otp}
-                                    onCodeChanged={code => setOtp(code)}
-                                    autoFocusOnLoad
-                                    codeInputFieldStyle={styles.otpField}
-                                    codeInputHighlightStyle={styles.otpFieldFocused}
-                                    keyboardAppearance={theme === 'dark' ? 'dark' : 'light'}
+                                <OtpInput
+                                    numberOfDigits={6}
+                                    onTextChange={setOtp}
+                                    autoFocus={true}
+                                    theme={{
+                                        containerStyle: styles.otpInput,
+                                        pinCodeContainerStyle: styles.otpField,
+                                        pinCodeTextStyle: styles.otpInput,
+                                    }}
                                 />
                             </View>
                         </View>
@@ -82,6 +82,12 @@ const OTPVerification: React.FC<OTPVerificationProps> = ({ route }) => {
                         <View>
                             {/* Button Section */}
                             <View style={styles.buttonSection}>
+                                {/* Resend Section */}
+                                <TextComp
+                                    text='RESEND_OTP'
+                                    style={styles.resendText}
+                                    onPress={handleResendOTP}
+                                />
                                 <ButtonComp
                                     title='CONTINUE'
                                     onPress={handleContinue}
@@ -90,12 +96,7 @@ const OTPVerification: React.FC<OTPVerificationProps> = ({ route }) => {
                                 />
                             </View>
 
-                            {/* Resend Section */}
-                            <TextComp
-                                text='RESEND_OTP'
-                                style={styles.resendText}
-                                onPress={handleResendOTP}
-                            />
+
                         </View>
                     </View>
                 </TouchableWithoutFeedback>
