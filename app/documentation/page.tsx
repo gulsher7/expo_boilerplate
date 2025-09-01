@@ -49,8 +49,8 @@ const DocumentationPage = () => {
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </h2>
               <div className="flex gap-2 flex-wrap mb-4">
-                <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">React Native 0.78.2</span>
-                <span className="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm">React 19.0.0</span>
+                <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">React Native 0.81.1</span>
+                <span className="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm">React 19.1.0</span>
               </div>
               <p className="text-muted-foreground">
                 A bare React Native boilerplate with full native control, custom configurations, and optimized build settings.

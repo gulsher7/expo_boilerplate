@@ -50,10 +50,10 @@ const CliDocumentationPage = () => {
         <h1 className="text-4xl font-bold mb-8">React Native CLI</h1>
 
         <div className="flex gap-2 flex-wrap mb-8">
-          <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">React Native 0.78.2</span>
-          <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">TypeScript 5.0.4</span>
+          <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">React Native 0.81.1</span>
+          <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">React 19.1.0</span>
           <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">Redux 5.0.1</span>
-          <span className="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm">React Navigation 7.0</span>
+          <span className="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm">React Navigation 7.1.17</span>
         </div>
 
         {/* GitHub Repository Link */}
@@ -80,7 +80,7 @@ const CliDocumentationPage = () => {
 
         <h2 className="text-2xl font-bold mt-10 mb-4">Features</h2>
         <ul className="list-disc pl-6 space-y-2">
-          <li><strong>🔐 Authentication Flow</strong>: Complete login and OTP verification using @twotalltotems/react-native-otp-input</li>
+          <li><strong>🔐 Authentication Flow</strong>: Complete login and OTP verification using react-native-otp-entry</li>
           <li><strong>🌓 Theme Support</strong>: Dynamic light/dark theme switching with context</li>
           <li><strong>🌐 Multi-language Support</strong>: RTL/LTR with i18next integration</li>
           <li><strong>📱 Responsive Design</strong>: Adapts to different screen sizes with proper scaling</li>
@@ -88,7 +88,8 @@ const CliDocumentationPage = () => {
           <li><strong>🔄 State Management</strong>: Redux Toolkit with proper action handling</li>
           <li><strong>🎨 SVG Support</strong>: Vector graphics with react-native-svg and transformer</li>
           <li><strong>🔒 Secure Storage</strong>: Encrypted storage with rn-secure-storage</li>
-          <li><strong>💫 Animations</strong>: Smooth animations with react-native-reanimated</li>
+          <li><strong>💫 Animations</strong>: Smooth animations with react-native-reanimated v4</li>
+          <li><strong>📋 Clipboard Support</strong>: Enhanced clipboard functionality</li>
           <li><strong>🚀 Fast Development</strong>: Hot reloading and developer tools</li>
           <li><strong>🛡️ Type Safety</strong>: Full TypeScript integration</li>
           <li><strong>🎯 Navigation</strong>: React Navigation 7 with bottom tabs and native stack</li>
@@ -127,31 +128,51 @@ const CliDocumentationPage = () => {
 
         <h3 className="text-xl font-semibold mt-6 mb-3">Core</h3>
         <ul className="list-disc pl-6 space-y-1">
-          <li><strong>React Native</strong>: v0.78.2</li>
-          <li><strong>TypeScript</strong>: v5.0.4</li>
-          <li><strong>React</strong>: v19.0.0</li>
+          <li><strong>React Native</strong>: v0.81.1</li>
+          <li><strong>React</strong>: v19.1.0</li>
+          <li><strong>@react-native/new-app-screen</strong>: v0.81.1</li>
         </ul>
 
         <h3 className="text-xl font-semibold mt-6 mb-3">State Management {'&'} Data Flow</h3>
         <ul className="list-disc pl-6 space-y-1">
           <li><strong>Redux</strong>: v5.0.1</li>
           <li><strong>React Redux</strong>: v9.2.0</li>
-          <li><strong>Redux Toolkit</strong>: v2.6.1</li>
+          <li><strong>Redux Toolkit</strong>: v2.8.2</li>
         </ul>
 
         <h3 className="text-xl font-semibold mt-6 mb-3">Navigation</h3>
         <ul className="list-disc pl-6 space-y-1">
-          <li><strong>@react-navigation/native</strong>: v7.1.5</li>
-          <li><strong>@react-navigation/native-stack</strong>: v7.3.9</li>
-          <li><strong>@react-navigation/bottom-tabs</strong>: v7.3.9</li>
+          <li><strong>@react-navigation/native</strong>: v7.1.17</li>
+          <li><strong>@react-navigation/native-stack</strong>: v7.3.26</li>
+          <li><strong>@react-navigation/bottom-tabs</strong>: v7.4.7</li>
+          <li><strong>react-native-safe-area-context</strong>: v5.6.1</li>
+          <li><strong>react-native-screens</strong>: v4.15.4</li>
         </ul>
 
         <h3 className="text-xl font-semibold mt-6 mb-3">UI {'&'} Animations</h3>
         <ul className="list-disc pl-6 space-y-1">
-          <li><strong>react-native-reanimated</strong>: v3.17.2</li>
-          <li><strong>react-native-svg</strong>: v15.11.2</li>
+          <li><strong>react-native-reanimated</strong>: v4.1.0</li>
+          <li><strong>react-native-worklets</strong>: v0.5.0</li>
+          <li><strong>react-native-svg</strong>: v15.12.1</li>
+          <li><strong>react-native-svg-transformer</strong>: v1.5.1</li>
           <li><strong>react-native-modal</strong>: v14.0.0-rc.1</li>
-          <li><strong>react-native-bootsplash</strong>: v6.3.4</li>
+          <li><strong>react-native-bootsplash</strong>: v6.3.10</li>
+        </ul>
+
+        <h3 className="text-xl font-semibold mt-6 mb-3">Internationalization</h3>
+        <ul className="list-disc pl-6 space-y-1">
+          <li><strong>i18next</strong>: v25.4.2</li>
+          <li><strong>react-i18next</strong>: v15.7.3</li>
+          <li><strong>intl-pluralrules</strong>: v2.0.1</li>
+        </ul>
+
+        <h3 className="text-xl font-semibold mt-6 mb-3">Utilities {'&'} Tools</h3>
+        <ul className="list-disc pl-6 space-y-1">
+          <li><strong>axios</strong>: v1.11.0</li>
+          <li><strong>react-native-otp-entry</strong>: v1.8.5</li>
+          <li><strong>@react-native-clipboard/clipboard</strong>: v1.16.3</li>
+          <li><strong>rn-secure-storage</strong>: v3.0.1</li>
+          <li><strong>patch-package</strong>: v8.0.0</li>
         </ul>
 
         <CoreConcept />

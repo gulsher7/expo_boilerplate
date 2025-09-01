@@ -167,7 +167,7 @@ const AppGenerator: React.FC = () => {
             <div className="bg-primary/10 p-2 rounded-lg">
               <Smartphone className="h-6 w-6 text-primary" />
             </div>
-            <h2 className="text-2xl font-bold">Create Your React Native App</h2>
+            <h2 className="text-2xl font-bold">Get Your React Native Boilerplate</h2>
           </div>
 
           <div className="space-y-6 relative z-10">
@@ -252,14 +252,14 @@ const AppGenerator: React.FC = () => {
                   <div className="absolute inset-0 bg-white/20 translate-y-12 group-hover:translate-y-0 transition-transform duration-300"></div>
                   <span className="relative flex items-center gap-2">
                     <Sparkles className="h-5 w-5" />
-                    Build My App
+                    Get My Boilerplate
                   </span>
                 </Button>
               ) : isComplete ? (
                 <div className="space-y-4">
                   <div className="flex items-center justify-center gap-2 text-white bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg py-4">
                     <Check className="h-5 w-5" />
-                    <span className="font-medium">App Generated Successfully!</span>
+                    <span className="font-medium">Boilerplate Ready for Download!</span>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <Button
@@ -268,7 +268,7 @@ const AppGenerator: React.FC = () => {
                       className="rounded-xl h-12 border-2 flex items-center justify-center gap-2 w-full"
                     >
                       <Upload className="h-4 w-4" />
-                      Create Another App
+                      Get Another Boilerplate
                     </Button>
                     <Button
                       className="rounded-xl h-12 bg-gradient-to-r from-primary to-accent hover:opacity-90 flex items-center justify-center gap-2 w-full"
@@ -276,7 +276,7 @@ const AppGenerator: React.FC = () => {
                       disabled={!jobId}
                     >
                       <Download className="h-4 w-4" />
-                      Download App
+                      Download Boilerplate
                     </Button>
                   </div>
                 </div>
@@ -286,7 +286,7 @@ const AppGenerator: React.FC = () => {
                   <div className="flex justify-center">
                     <div className="animate-bounce px-4 py-2 rounded-full bg-primary/10 text-primary text-sm flex items-center gap-2">
                       <Loader className="h-4 w-4 animate-spin" />
-                      <span>Crafting your app magic...</span>
+                      <span>Preparing your boilerplate...</span>
                     </div>
                   </div>
                 </div>
@@ -311,7 +311,7 @@ const AppGenerator: React.FC = () => {
                       <Loader className="h-5 w-5 animate-spin text-primary" />
                       <Sparkles className="h-3 w-3 absolute -top-1 -right-1 text-amber-400" />
                     </div>
-                    <h2 className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Building your React Native app...</h2>
+                    <h2 className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Preparing your React Native boilerplate...</h2>
                   </div>
                 ) : (
                   <div className="flex items-center gap-2">
@@ -319,7 +319,7 @@ const AppGenerator: React.FC = () => {
                       <Check className="h-5 w-5 text-green-500" />
                       <Sparkles className="h-3 w-3 absolute -top-1 -right-1 text-amber-400" />
                     </div>
-                    <h2 className="text-xl font-bold bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent">{isComplete ? "See Your App in Action" : "Building your React Native app..."}</h2>
+                    <h2 className="text-xl font-bold bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent">{isComplete ? "Your Boilerplate is Ready!" : "Preparing your React Native boilerplate..."}</h2>
                   </div>
                 )}
               </div>
@@ -345,12 +345,12 @@ const AppGenerator: React.FC = () => {
                 <Smartphone className="w-full h-full text-primary" />
                 <Sparkles className="h-6 w-6 absolute -top-2 -right-2 text-amber-400" />
               </motion.div>
-              <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Ready to Build Your App?</h3>
+              <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Ready to Get Your Boilerplate?</h3>
               {/* <p className="text-muted-foreground max-w-md mb-6">
                 Fill out the form with your app details, upload your assets, and watch as your React Native app comes to life.
               </p> */}
               <p className="text-muted-foreground max-w-md mb-6">
-                Fill out the form with your app details, and watch as your React Native app comes to life.
+                Fill out the form with your project details, and get your customized React Native boilerplate ready to download.
               </p>
               <div className="flex flex-wrap justify-center gap-2">
                 {["Fast", "Easy", "Professional", "Ready-to-use"].map((tag, i) => (
