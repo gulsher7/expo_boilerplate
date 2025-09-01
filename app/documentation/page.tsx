@@ -29,8 +29,8 @@ const DocumentationPage = () => {
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </h2>
               <div className="flex gap-2 flex-wrap mb-4">
-                <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">React Native 0.76.9</span>
-                <span className="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm">Expo 52.0.16</span>
+                <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">React Native 0.79.5</span>
+                <span className="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm">Expo 53.0.22</span>
               </div>
               <p className="text-muted-foreground">
                 A comprehensive boilerplate using Expo for rapid development with pre-configured features like OTA updates and simplified builds.

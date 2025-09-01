@@ -38,9 +38,10 @@ const ExpoDocumentationPage = () => {
         <h1 className="text-4xl font-bold mb-8">React Native Expo</h1>
         
         <div className="flex gap-2 flex-wrap mb-8">
-          <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">React Native 0.76.9</span>
-          <span className="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm">Expo 52.0.16</span>
-          <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">TypeScript 5.3.3</span>
+          <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">React Native 0.79.5</span>
+          <span className="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm">Expo 53.0.22</span>
+          <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">React 19.0.0</span>
+          <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">Redux 5.0.1</span>
         </div>
 
         {/* GitHub Repository Link */}
@@ -70,14 +71,18 @@ const ExpoDocumentationPage = () => {
 
         <h2 className="text-2xl font-bold mt-10 mb-4">Features</h2>
         <ul className="list-disc pl-6 space-y-2">
-          <li><strong>🔐 Authentication Flow</strong>: Complete login, signup, and OTP verification</li>
+          <li><strong>🔐 Authentication Flow</strong>: Complete login, signup, and OTP verification with react-native-otp-entry</li>
           <li><strong>🌓 Theme Support</strong>: Dynamic light/dark theme switching</li>
-          <li><strong>🌐 Multi-language Support</strong>: RTL/LTR with language switching (English/Arabic)</li>
+          <li><strong>🌐 Multi-language Support</strong>: RTL/LTR with language switching using i18next</li>
           <li><strong>📱 Responsive Design</strong>: Adapts to different screen sizes and orientations</li>
           <li><strong>🧩 Modular Architecture</strong>: Highly maintainable code structure</li>
-          <li><strong>🔄 State Management</strong>: Centralized Redux store with structured actions</li>
-          <li><strong>🔒 Secure Storage</strong>: Encrypted local data storage</li>
-          <li><strong>📊 API Integration</strong>: Structured API services with proper error handling</li>
+          <li><strong>🔄 State Management</strong>: Centralized Redux store with Redux Toolkit</li>
+          <li><strong>🔒 Secure Storage</strong>: Encrypted local data storage with Expo Secure Store</li>
+          <li><strong>📊 API Integration</strong>: Structured API services with Axios and proper error handling</li>
+          <li><strong>📋 Clipboard Support</strong>: Enhanced clipboard functionality with Expo Clipboard</li>
+          <li><strong>🖼️ Optimized Images</strong>: Fast image loading and caching with Expo Image</li>
+          <li><strong>💫 Smooth Animations</strong>: Fluid animations with React Native Reanimated</li>
+          <li><strong>🎨 SVG Support</strong>: Vector graphics with react-native-svg</li>
         </ul>
 
         <h2 className="text-2xl font-bold mt-10 mb-4">Project Architecture</h2>
@@ -99,17 +104,59 @@ const ExpoDocumentationPage = () => {
         </pre>
 
         <h2 className="text-2xl font-bold mt-10 mb-4">Technology Stack</h2>
-        <ul className="list-disc pl-6 space-y-2">
-          <li><strong>React Native (0.76.9)</strong>: Core framework for building the mobile app</li>
-          <li><strong>TypeScript (5.3.3)</strong>: For type safety and improved developer experience</li>
-          <li><strong>Expo (52.0.16)</strong>: Development platform for React Native</li>
-          <li><strong>Redux Toolkit</strong>: For centralized state management</li>
-          <li><strong>React Navigation 7.x</strong>: Screen navigation with stack and tab navigators</li>
-          <li><strong>i18next</strong>: Internationalization framework</li>
-          <li><strong>Axios</strong>: HTTP client for API requests</li>
-          <li><strong>Reanimated</strong>: For fluid animations</li>
-          <li><strong>Secure Store</strong>: For encrypted local storage</li>
-          <li><strong>SVG Support</strong>: For vector graphics</li>
+        
+        <h3 className="text-xl font-semibold mt-6 mb-3">Core</h3>
+        <ul className="list-disc pl-6 space-y-1">
+          <li><strong>React Native</strong>: v0.79.5</li>
+          <li><strong>React</strong>: v19.0.0</li>
+          <li><strong>Expo</strong>: v53.0.22</li>
+        </ul>
+
+        <h3 className="text-xl font-semibold mt-6 mb-3">State Management {'&'} Data Flow</h3>
+        <ul className="list-disc pl-6 space-y-1">
+          <li><strong>Redux</strong>: v5.0.1</li>
+          <li><strong>React Redux</strong>: v9.2.0</li>
+          <li><strong>Redux Toolkit</strong>: v2.6.1</li>
+        </ul>
+
+        <h3 className="text-xl font-semibold mt-6 mb-3">Navigation</h3>
+        <ul className="list-disc pl-6 space-y-1">
+          <li><strong>@react-navigation/native</strong>: v7.1.17</li>
+          <li><strong>@react-navigation/native-stack</strong>: v7.3.26</li>
+          <li><strong>@react-navigation/bottom-tabs</strong>: v7.4.7</li>
+          <li><strong>react-native-safe-area-context</strong>: v5.4.0</li>
+          <li><strong>react-native-screens</strong>: v4.11.1</li>
+        </ul>
+
+        <h3 className="text-xl font-semibold mt-6 mb-3">UI {'&'} Animations</h3>
+        <ul className="list-disc pl-6 space-y-1">
+          <li><strong>react-native-reanimated</strong>: v3.17.4</li>
+          <li><strong>react-native-svg</strong>: v15.11.2</li>
+          <li><strong>react-native-svg-transformer</strong>: v1.5.0</li>
+          <li><strong>react-native-modal</strong>: v14.0.0-rc.1</li>
+        </ul>
+
+        <h3 className="text-xl font-semibold mt-6 mb-3">Expo Modules</h3>
+        <ul className="list-disc pl-6 space-y-1">
+          <li><strong>expo-clipboard</strong>: v7.1.5</li>
+          <li><strong>expo-font</strong>: v13.3.2</li>
+          <li><strong>expo-image</strong>: v2.4.0</li>
+          <li><strong>expo-secure-store</strong>: v14.2.4</li>
+          <li><strong>expo-splash-screen</strong>: v0.30.10</li>
+        </ul>
+
+        <h3 className="text-xl font-semibold mt-6 mb-3">Internationalization</h3>
+        <ul className="list-disc pl-6 space-y-1">
+          <li><strong>i18next</strong>: v25.4.2</li>
+          <li><strong>react-i18next</strong>: v15.7.3</li>
+          <li><strong>intl-pluralrules</strong>: v2.0.1</li>
+        </ul>
+
+        <h3 className="text-xl font-semibold mt-6 mb-3">Utilities {'&'} Tools</h3>
+        <ul className="list-disc pl-6 space-y-1">
+          <li><strong>axios</strong>: v1.8.4</li>
+          <li><strong>react-native-otp-entry</strong>: v1.8.4</li>
+          <li><strong>patch-package</strong>: v8.0.0</li>
         </ul>
 
         <h2 className="text-2xl font-bold mt-10 mb-4">Setup and Installation</h2>
