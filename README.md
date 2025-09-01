@@ -42,9 +42,9 @@ src/
 
 ## Technology Stack
 
-- **React Native (0.76.9)**: Core framework for building the mobile app
-- **TypeScript (5.3.3)**: For type safety and improved developer experience
-- **Expo (52.0.16)**: Development platform for React Native
+- **React Native (0.79.5)**: Core framework for building the mobile app
+- **TypeScript (5.8.3)**: For type safety and improved developer experience
+- **Expo (53.0.22)**: Development platform for React Native
 - **Redux Toolkit**: For centralized state management
 - **React Navigation 7.x**: Screen navigation with stack and tab navigators
 - **i18next**: Internationalization framework
