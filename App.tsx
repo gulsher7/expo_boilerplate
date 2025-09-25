@@ -23,6 +23,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from "react-redux";
 import { ThemeProvider } from '@/context/ThemeContext';
 import { getLocalItem } from "@/utils/checkStorage";
+import { requestUserPermission } from "helper/notifciationService";
 
 /**
  * Main application component that serves as the entry point for the app.
@@ -61,6 +62,9 @@ const App = () => {
     
     // Initialize app from stored user preferences (theme, language, auth state)
     getLocalItem();
+
+    // Initialize Firebase
+    requestUserPermission()
     
     // Hide splash screen once fonts are loaded or if there was an error
     if (loaded || error) {

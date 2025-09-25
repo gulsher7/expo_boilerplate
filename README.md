@@ -20,6 +20,7 @@ NativeCraft is a React Native mobile application built with TypeScript and Expo.
 - 🔄 **State Management**: Centralized Redux store with structured actions
 - 🔒 **Secure Storage**: Encrypted local data storage
 - 📊 **API Integration**: Structured API services with proper error handling
+- 🔥 **Firebase Integration**: Push notifications and Firebase services support
 
 ## Project Architecture
 
@@ -42,9 +43,9 @@ src/
 
 ## Technology Stack
 
-- **React Native (0.79.5)**: Core framework for building the mobile app
-- **TypeScript (5.8.3)**: For type safety and improved developer experience
-- **Expo (53.0.22)**: Development platform for React Native
+- **React Native (0.81.4)**: Core framework for building the mobile app
+- **TypeScript (5.9.2)**: For type safety and improved developer experience
+- **Expo (54.0.10)**: Development platform for React Native
 - **Redux Toolkit**: For centralized state management
 - **React Navigation 7.x**: Screen navigation with stack and tab navigators
 - **i18next**: Internationalization framework
@@ -52,6 +53,7 @@ src/
 - **Reanimated**: For fluid animations
 - **Secure Store**: For encrypted local storage
 - **SVG Support**: For vector graphics
+- **React Native Firebase**: Firebase services integration (messaging, analytics, etc.)
 
 ## Setup and Installation
 
@@ -61,6 +63,7 @@ src/
 - npm or yarn
 - Expo CLI
 - iOS Simulator or Android Emulator (optional)
+- Firebase project with configuration files (google-services.json and GoogleService-Info.plist)
 
 ### Installation Steps
 
@@ -77,14 +80,27 @@ src/
    yarn install
    ```
 
-3. Start the development server
+3. **Firebase Configuration** (Required)
+   - Create a Firebase project at [Firebase Console](https://console.firebase.google.com/)
+   - Download `google-services.json` for Android and place it in the project root
+   - Download `GoogleService-Info.plist` for iOS and place it in the project root
+   - Enable Firebase Messaging and any other required services in your Firebase project
+
+4. **Generate native code** (Required for Firebase)
+   ```bash
+   npx expo prebuild
+   ```
+   
+   > **Important**: Since this app uses React Native Firebase, you must run `expo prebuild` to generate the native Android and iOS folders. This is required before running the app on devices or simulators.
+
+5. Start the development server
    ```bash
    npm start
    # or
    yarn start
    ```
 
-4. Run on specific platform
+6. Run on specific platform
    ```bash
    # iOS
    npm run ios
@@ -92,6 +108,12 @@ src/
    # Android
    npm run android
    ```
+
+### Firebase Setup Notes
+
+- The app includes Firebase configuration for push notifications
+- Firebase configuration files (`google-services.json` and `GoogleService-Info.plist`) are already configured in `app.json`
+- After adding your Firebase config files, the `expo prebuild` command will properly integrate them into the native projects
 
 ## Core Concepts and Implementation
 
@@ -490,6 +512,60 @@ export const secureStorage = {
 };
 ```
 
+### Firebase Integration
+
+The app uses React Native Firebase for push notifications and other Firebase services:
+
+```typescript
+// Firebase messaging setup
+import messaging from '@react-native-firebase/messaging';
+import { PermissionsAndroid, Platform } from 'react-native';
+
+// Request notification permission (iOS)
+const requestUserPermission = async () => {
+  const authStatus = await messaging().requestPermission();
+  const enabled =
+    authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+    authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+  if (enabled) {
+    console.log('Authorization status:', authStatus);
+  }
+};
+
+// Get FCM token
+const getFCMToken = async () => {
+  try {
+    const token = await messaging().getToken();
+    console.log('FCM Token:', token);
+    return token;
+  } catch (error) {
+    console.log('Error getting FCM token:', error);
+  }
+};
+
+// Handle foreground messages
+messaging().onMessage(async remoteMessage => {
+  console.log('A new FCM message arrived!', JSON.stringify(remoteMessage));
+});
+
+// Handle background messages
+messaging().setBackgroundMessageHandler(async remoteMessage => {
+  console.log('Message handled in the background!', remoteMessage);
+});
+```
+
+**Firebase Configuration Files:**
+- `google-services.json`: Android configuration file
+- `GoogleService-Info.plist`: iOS configuration file
+- Both files are automatically integrated during the `expo prebuild` process
+
+**Firebase Services Available:**
+- Push Notifications (Firebase Cloud Messaging)
+- Analytics (if configured)
+- Crashlytics (if configured)
+- Remote Config (if configured)
+
 ### SVG Integration
 
 The app uses react-native-svg and react-native-svg-transformer for SVG support:
@@ -619,6 +695,38 @@ TypeScript provides:
 3. **Refactoring Confidence**: Safer refactoring with type checking
 4. **API Contract Enforcement**: Interface definitions for API responses
 
+## Troubleshooting
+
+### Firebase Issues
+
+**Error: "No Firebase App '[DEFAULT]' has been created"**
+- Ensure `google-services.json` and `GoogleService-Info.plist` are in the project root
+- Run `npx expo prebuild --clean` to regenerate native folders
+- Check that Firebase plugins are properly configured in `app.json`
+
+**Build errors after adding Firebase**
+- Clear Metro cache: `npx expo start --clear`
+- Clean prebuild: `npx expo prebuild --clean`
+- For iOS: `cd ios && pod install`
+
+**Push notifications not working**
+- Verify Firebase project has Cloud Messaging enabled
+- Check that the correct bundle identifier/package name is used in Firebase
+- For iOS: Ensure APNs certificate is uploaded to Firebase
+- Test on physical devices (push notifications don't work on simulators)
+
+### Common Prebuild Issues
+
+**"expo prebuild" fails**
+- Delete `android/` and `ios/` folders
+- Run `npx expo prebuild --clean`
+- Ensure all required config files are present
+
+**Metro bundler issues**
+- Clear cache: `npx expo start --clear`
+- Reset Metro: `npx expo start --reset-cache`
+- Check for conflicting dependencies
+
 ## Best Practices
 
 ### Code Style
@@ -641,6 +749,13 @@ TypeScript provides:
 - Use HTTPS for all API requests
 - Sanitize user inputs
 - Implement proper token refresh mechanism
+
+### Firebase Best Practices
+
+- Always handle Firebase initialization errors
+- Implement proper token refresh for FCM
+- Use Firebase rules for data security
+- Monitor Firebase usage and quotas
 
 ## License
 

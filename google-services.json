@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "534630157191",
+    "project_id": "expo-boilerplate-d65a5",
+    "storage_bucket": "expo-boilerplate-d65a5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:534630157191:android:a6a2248dd35bc188d1e122",
+        "android_client_info": {
+          "package_name": "boilerplate.expo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwnKcweQTUmsSAYQ5Nm79qSLr1HMmltqA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
