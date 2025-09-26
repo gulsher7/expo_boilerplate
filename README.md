@@ -1,17 +1,20 @@
 # NativeCraft - React Native Mobile App
 
-![React Native](https://img.shields.io/badge/React_Native-0.76.9-blue)
-![Expo](https://img.shields.io/badge/Expo-52.0.16-white)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.3.3-blue)
+![React Native](https://img.shields.io/badge/React_Native-0.81.4-blue)
+![Expo](https://img.shields.io/badge/Expo-54.0.10-white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9.2-blue)
+![New Architecture](https://img.shields.io/badge/New_Architecture-Enabled-green)
+![Firebase](https://img.shields.io/badge/Firebase-Integrated-orange)
 
 ## Project Overview
 
-NativeCraft is a React Native mobile application built with TypeScript and Expo. It features robust authentication, RTL/LTR language support, dark/light theme capabilities, and a modern UI experience. The app follows a structured, modular architecture with a focus on reusability, scalability, and maintainability.
+NativeCraft is a cutting-edge React Native mobile application built with TypeScript and Expo, proudly featuring **React Native's New Architecture** for superior performance and future-proofing. It offers robust authentication, RTL/LTR language support, dark/light theme capabilities, and a modern UI experience. The app follows a structured, modular architecture with a focus on reusability, scalability, and maintainability.
 
 [Check out the app demo video](https://github.com/user-attachments/assets/cb478a0a-a574-4f5e-987a-74bcb6f0e18a)
 
 ## Features
 
+- ⚡ **New Architecture Ready**: Built with React Native's New Architecture (Fabric & TurboModules) for enhanced performance
 - 🔐 **Authentication Flow**: Complete login, signup, and OTP verification
 - 🌓 **Theme Support**: Dynamic light/dark theme switching
 - 🌐 **Multi-language Support**: RTL/LTR with language switching (English/Arabic)
@@ -43,14 +46,14 @@ src/
 
 ## Technology Stack
 
-- **React Native (0.81.4)**: Core framework for building the mobile app
+- **React Native (0.81.4)**: Core framework with **New Architecture** enabled (Fabric & TurboModules)
 - **TypeScript (5.9.2)**: For type safety and improved developer experience
 - **Expo (54.0.10)**: Development platform for React Native
 - **Redux Toolkit**: For centralized state management
 - **React Navigation 7.x**: Screen navigation with stack and tab navigators
 - **i18next**: Internationalization framework
 - **Axios**: HTTP client for API requests
-- **Reanimated**: For fluid animations
+- **Reanimated**: For fluid animations with New Architecture compatibility
 - **Secure Store**: For encrypted local storage
 - **SVG Support**: For vector graphics
 - **React Native Firebase**: Firebase services integration (messaging, analytics, etc.)
@@ -116,6 +119,43 @@ src/
 - After adding your Firebase config files, the `expo prebuild` command will properly integrate them into the native projects
 
 ## Core Concepts and Implementation
+
+### 🚀 New Architecture (Fabric & TurboModules)
+
+NativeCraft proudly leverages **React Native's New Architecture** for enhanced performance and future-ready development:
+
+**What's Included:**
+- **Fabric Renderer**: New rendering system for improved UI performance
+- **TurboModules**: Faster native module loading and execution  
+- **JSI (JavaScript Interface)**: Direct JavaScript-to-native communication
+- **Codegen**: Automatic type-safe native code generation
+
+**Performance Benefits:**
+- ⚡ Faster app startup times
+- 🎯 Improved UI responsiveness  
+- 📱 Better memory management
+- 🔄 Smoother animations and transitions
+
+**Configuration:**
+```json
+// app.json
+{
+  "expo": {
+    "newArchEnabled": true,
+    "experiments": {
+      "reactCompiler": true
+    }
+  }
+}
+```
+
+**Why New Architecture Matters:**
+- **Future-Proof**: Built for React Native's roadmap
+- **Performance**: Significant improvements in rendering and native communication
+- **Developer Experience**: Better debugging and development tools
+- **Ecosystem**: Growing support from popular libraries
+
+> 💡 **Pro Tip**: The New Architecture is the future of React Native development, and NativeCraft is built from the ground up to take advantage of these improvements!
 
 ### Theme System (Dark/Light)
 
@@ -756,6 +796,14 @@ TypeScript provides:
 - Implement proper token refresh for FCM
 - Use Firebase rules for data security
 - Monitor Firebase usage and quotas
+
+### New Architecture Best Practices
+
+- **Component Design**: Build components with New Architecture in mind for optimal performance
+- **Native Modules**: Use TurboModules-compatible libraries when possible
+- **Testing**: Test thoroughly on New Architecture to catch compatibility issues early
+- **Performance Monitoring**: Leverage the improved performance metrics available
+- **Future-Proofing**: Stay updated with React Native's New Architecture roadmap
 
 ## License
 
