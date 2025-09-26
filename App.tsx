@@ -23,7 +23,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from "react-redux";
 import { ThemeProvider } from '@/context/ThemeContext';
 import { getLocalItem } from "@/utils/checkStorage";
-import { requestUserPermission } from "helper/notifciationService";
+import { requestUserPermission } from "@/helper/notifciationService";
 
 /**
  * Main application component that serves as the entry point for the app.
