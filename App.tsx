@@ -18,10 +18,11 @@ import store from "@/redux/store";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import React, { useEffect } from 'react';
-import { I18nManager } from "react-native";
+import { I18nManager, StatusBar } from "react-native";
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from "react-redux";
-import { ThemeProvider } from '@/context/ThemeContext';
+import { ThemeProvider, useTheme } from '@/context/ThemeContext';
+import { Colors } from '@/styles/colors';
 import { getLocalItem } from "@/utils/checkStorage";
 import { requestUserPermission } from "@/helper/notifciationService";
 
@@ -88,11 +89,17 @@ const App = () => {
     <SafeAreaProvider>
       <Provider store={store}>
         <ThemeProvider>
+          <ThemedStatusBar />
           <Routes />
         </ThemeProvider>
       </Provider>
     </SafeAreaProvider>
   );
+};
+
+const ThemedStatusBar = () => {
+  const { theme } = useTheme();
+  return <StatusBar barStyle={Colors[theme].statusBar as 'light-content' | 'dark-content'} />;
 };
 
 export default App;

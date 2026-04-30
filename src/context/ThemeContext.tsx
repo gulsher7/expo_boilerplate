@@ -6,7 +6,6 @@
 
 import { useSelector } from '@/redux/hooks';
 import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-import { Appearance, ColorSchemeName } from 'react-native';
 
 /**
  * Theme type definition representing the two available themes
@@ -49,20 +48,16 @@ const ThemeContext = createContext<ThemeContextProps>({
  * </ThemeProvider>
  */
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  // Get system color scheme (light/dark)
-  const colorScheme: ColorSchemeName = Appearance.getColorScheme();
-  
   // Get user's theme preference from Redux store
   const { defaultTheme } = useSelector(state => state.settings);
-  
+
   /**
    * Initialize theme state with priority:
    * 1. User-selected theme from Redux store
-   * 2. System color scheme
-   * 3. Default to 'light' theme
+   * 2. Default to 'light' theme
    */
   const [theme, setTheme] = useState<ThemeType>(
-    (defaultTheme?.myTheme as ThemeType) || (colorScheme === 'dark' ? 'dark' : 'light')
+    (defaultTheme?.myTheme as ThemeType) || 'light'
   );
 
   /**
@@ -81,19 +76,6 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     if (defaultTheme?.myTheme) {
       setTheme(defaultTheme.myTheme as ThemeType);
     }
-  }, [defaultTheme?.myTheme]);
-
-  /**
-   * Effect to handle system theme changes
-   * Only applies if user hasn't explicitly set a theme preference
-   */
-  useEffect(() => {
-    const subscription = Appearance.addChangeListener(({ colorScheme }) => {
-      if (!defaultTheme?.myTheme) {
-        setTheme(colorScheme === 'dark' ? 'dark' : 'light');
-      }
-    });
-    return () => subscription.remove();
   }, [defaultTheme?.myTheme]);
 
   return (
